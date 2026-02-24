@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hPass - Enterprise Password Manager</title>
+    <meta name="description" content="hPass - Trình quản lý mật khẩu doanh nghiệp cho Android. Bảo mật AES-256, Autofill, Sync, Biometric.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF791D;
+            --secondary: #174785;
+            --success: #348D00;
+            --accent: #ED542C;
+            --bg-dark: #0f1419;
+            --bg-card: #1a2332;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --gradient: linear-gradient(135deg, #FF791D 0%, #ED542C 50%, #174785 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(15, 20, 25, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-brand .lock-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-download:hover {
+            background: #e66b10;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(255,121,29,0.3);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(255,121,29,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(ellipse, rgba(23,71,133,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255,121,29,0.35);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Phone mockup */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .phone-frame {
+            width: 280px;
+            height: 580px;
+            background: #1a1a2e;
+            border-radius: 36px;
+            border: 3px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: #1a1a2e;
+            border-radius: 0 0 16px 16px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #FF791D 0%, #FF791D 20%, #0f1419 60%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 20px;
+        }
+
+        .phone-screen .app-logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 28px;
+        }
+
+        .phone-screen .app-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .phone-screen .mock-card {
+            width: 100%;
+            background: rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .phone-screen .mock-dots {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .mock-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .mock-dot.filled { background: white; }
+
+        .mock-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .mock-key {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin: 0 auto;
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255,121,29,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.7rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Screenshots slider */
+        .screenshots {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(26,35,50,0.5) 50%, var(--bg-dark) 100%);
+        }
+
+        .slider-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 1.5rem;
+            animation: scroll-left 40s linear infinite;
+            width: max-content;
+        }
+
+        .slider-track:hover { animation-play-state: paused; }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .screenshot-item {
+            flex-shrink: 0;
+            width: 240px;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.08);
+            background: var(--bg-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .screenshot-item .screen-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .screenshot-item .screen-mock {
+            flex: 1;
+            width: 100%;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+        }
+
+        .mock-row {
+            height: 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 10px;
+        }
+
+        .mock-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        .mock-text {
+            height: 10px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        .mock-text.short { width: 60%; flex: none; }
+
+        /* Download section */
+        .download-section {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .download-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .download-card h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .download-card p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .download-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .download-info .info-item {
+            text-align: center;
+        }
+
+        .download-info .info-item .label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .download-info .info-item .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Feedback / Issues */
+        .feedback {
+            padding: 4rem 2rem 6rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feedback-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .feedback-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .feedback-card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .feedback-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-text p { margin: 0 auto 2rem; }
+            .hero-actions { justify-content: center; }
+            .hero-visual { margin-top: 2rem; }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feedback-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phone-frame {
+                width: 220px;
+                height: 460px;
+            }
+
+            .hero-text h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-brand">
+            <span class="lock-icon">&#128274;</span>
+            hPass
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#screenshots">Screenshots</a>
+            <a href="#download">Download</a>
+            <a href="#feedback">Feedback</a>
+        </div>
+        <a href="#download" class="btn-download">&#11015; Download APK</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>
+                    Your passwords,<br>
+                    <span>securely managed.</span>
+                </h1>
+                <p>
+                    hPass is an enterprise-grade password manager for Android.
+                    AES-256 encryption, biometric unlock, autofill, team sync &mdash;
+                    built for businesses that take security seriously.
+                </p>
+                <div class="hero-actions">
+                    <a href="#download" class="btn-primary">
+                        &#11015; Download v1.0.34
+                    </a>
+                    <a href="https://github.com/haoquangviet/hPass/issues" class="btn-secondary">
+                        &#128172; Report Issues
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-frame">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="app-logo">&#128274;</div>
+                        <div class="app-title">hPass</div>
+                        <div class="mock-card">
+                            <div style="text-align:center; color:rgba(255,255,255,0.8); font-size:14px; margin-bottom:16px;">Enter PIN</div>
+                            <div class="mock-dots">
+                                <div class="mock-dot filled"></div>
+                                <div class="mock-dot filled"></div>
+                                <div class="mock-dot filled"></div>
+                                <div class="mock-dot"></div>
+                                <div class="mock-dot"></div>
+                                <div class="mock-dot"></div>
+                            </div>
+                            <div class="mock-keypad">
+                                <div class="mock-key">1</div>
+                                <div class="mock-key">2</div>
+                                <div class="mock-key">3</div>
+                                <div class="mock-key">4</div>
+                                <div class="mock-key">5</div>
+                                <div class="mock-key">6</div>
+                                <div class="mock-key">7</div>
+                                <div class="mock-key">8</div>
+                                <div class="mock-key">9</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Built for Security</h2>
+            <p>Every feature designed with enterprise-level security in mind</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(255,121,29,0.15);">&#128272;</div>
+                <h3>AES-256 Encryption</h3>
+                <p>Military-grade encryption protects your vault. Data is encrypted locally before any sync. Even we can't read your passwords.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(52,141,0,0.15);">&#128587;</div>
+                <h3>Biometric Unlock</h3>
+                <p>Fingerprint or face unlock for instant access. Hardware-backed Keystore ensures biometric keys never leave the secure enclave.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(23,71,133,0.15);">&#128260;</div>
+                <h3>Enterprise Sync</h3>
+                <p>Sync passwords across your team securely. End-to-end encrypted sync with your organization's hCRM server.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(237,84,44,0.15);">&#128736;</div>
+                <h3>Android Autofill</h3>
+                <p>One-tap login in any app or browser. Inline suggestions in the keyboard strip with smart domain matching.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(156,39,176,0.15);">&#128338;</div>
+                <h3>TOTP Authenticator</h3>
+                <p>Built-in 2FA code generator. No separate authenticator app needed &mdash; OTP codes right in your vault.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(0,150,136,0.15);">&#128241;</div>
+                <h3>Tablet Optimized</h3>
+                <p>Adaptive layout for phones, foldables, and tablets. Master-detail split view on wide screens for productivity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Slider -->
+    <section class="screenshots" id="screenshots">
+        <div class="section-header">
+            <h2>See it in Action</h2>
+            <p>Clean, modern UI designed for daily use</p>
+        </div>
+        <div class="slider-container">
+            <div class="slider-track">
+                <!-- Screen 1: Vault List -->
+                <div class="screenshot-item">
+                    <div class="screen-title">Vault List</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="text-align:center;color:#FF791D;font-weight:700;font-size:14px;padding:8px;">&#128274; hPass</div>
+                        <div class="mock-row"><div class="mock-avatar"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#174785;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#348D00;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#ED542C;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#9C27B0;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#174785;"></div><div class="mock-text"></div></div>
+                    </div>
+                </div>
+                <!-- Screen 2: Detail -->
+                <div class="screenshot-item">
+                    <div class="screen-title">Item Detail</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="color:#94a3b8;font-size:11px;padding:4px;">&#8592; Back</div>
+                        <div style="text-align:center;font-weight:700;color:white;font-size:16px;padding:12px;">Google</div>
+                        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px;margin:4px 0;">
+                            <div style="color:#94a3b8;font-size:10px;">Username</div>
+                            <div style="color:white;font-size:12px;">user@email.com</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px;margin:4px 0;">
+                            <div style="color:#94a3b8;font-size:10px;">Password</div>
+                            <div style="color:white;font-size:12px;">&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px;margin:4px 0;">
+                            <div style="color:#94a3b8;font-size:10px;">OTP</div>
+                            <div style="color:#FF791D;font-size:16px;font-weight:700;">482 391</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Screen 3: Autofill -->
+                <div class="screenshot-item">
+                    <div class="screen-title">Autofill</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#f5f5f5,#e0e0e0);">
+                        <div style="text-align:center;color:#333;font-size:12px;padding:8px;">Chrome - Login</div>
+                        <div style="background:white;border-radius:8px;padding:10px;border:1px solid #ddd;">
+                            <div style="color:#999;font-size:10px;">Email</div>
+                            <div style="color:#333;font-size:11px;">user@email.com</div>
+                        </div>
+                        <div style="height:8px;"></div>
+                        <div style="background:#FF791D;border-radius:8px;padding:8px;display:flex;align-items:center;gap:6px;">
+                            <div style="width:20px;height:20px;background:white;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;">&#128274;</div>
+                            <div>
+                                <div style="color:white;font-size:10px;font-weight:600;">Google Account</div>
+                                <div style="color:rgba(255,255,255,0.8);font-size:9px;">user@email.com</div>
+                            </div>
+                        </div>
+                        <div style="background:#f0f0f0;border-radius:8px;padding:8px;display:flex;align-items:center;gap:6px;margin-top:4px;">
+                            <div style="width:20px;height:20px;background:#174785;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:white;">&#128274;</div>
+                            <div>
+                                <div style="color:#333;font-size:10px;font-weight:600;">Open hPass</div>
+                                <div style="color:#666;font-size:9px;">Search & copy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Screen 4: Password Generator -->
+                <div class="screenshot-item">
+                    <div class="screen-title">Password Generator</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="color:white;font-weight:700;font-size:14px;padding:8px;">Generate Password</div>
+                        <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:12px;font-family:monospace;color:#FF791D;font-size:11px;word-break:break-all;">
+                            kR7#mP9$xL2!nQ4&amp;
+                        </div>
+                        <div style="margin-top:10px;">
+                            <div style="color:#94a3b8;font-size:10px;">Length: 16</div>
+                            <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-top:4px;">
+                                <div style="height:100%;width:50%;background:var(--primary);border-radius:2px;"></div>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;">
+                            <span style="background:#FF791D;color:white;padding:4px 8px;border-radius:12px;font-size:9px;">A-Z</span>
+                            <span style="background:#FF791D;color:white;padding:4px 8px;border-radius:12px;font-size:9px;">a-z</span>
+                            <span style="background:#FF791D;color:white;padding:4px 8px;border-radius:12px;font-size:9px;">0-9</span>
+                            <span style="background:#FF791D;color:white;padding:4px 8px;border-radius:12px;font-size:9px;">!@#</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Screen 5: Settings -->
+                <div class="screenshot-item">
+                    <div class="screen-title">Settings</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="color:#174785;font-weight:700;font-size:14px;padding:8px;">&#9881; Settings</div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(255,121,29,0.3);"></div></div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(23,71,133,0.3);"></div></div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(52,141,0,0.3);"></div></div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(237,84,44,0.3);"></div></div>
+                        <div class="mock-row"><div class="mock-text short" style="background:rgba(156,39,176,0.3);"></div></div>
+                    </div>
+                </div>
+                <!-- Screen 6: Tablet Layout -->
+                <div class="screenshot-item" style="width:380px;">
+                    <div class="screen-title">Tablet Mode</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);flex-direction:row;gap:1px;">
+                        <div style="width:80px;flex-shrink:0;background:rgba(255,255,255,0.03);padding:8px;border-radius:8px 0 0 8px;">
+                            <div style="width:24px;height:24px;background:var(--primary);border-radius:50%;margin:0 auto 8px;"></div>
+                            <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin-bottom:6px;"></div>
+                            <div style="height:6px;background:rgba(255,121,29,0.3);border-radius:3px;margin-bottom:6px;"></div>
+                            <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin-bottom:6px;"></div>
+                            <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"></div>
+                        </div>
+                        <div style="flex:1;padding:8px;">
+                            <div class="mock-row" style="height:28px;margin-bottom:4px;"><div class="mock-avatar" style="width:20px;height:20px;"></div><div class="mock-text"></div></div>
+                            <div class="mock-row" style="height:28px;margin-bottom:4px;"><div class="mock-avatar" style="width:20px;height:20px;background:#174785;"></div><div class="mock-text"></div></div>
+                            <div class="mock-row" style="height:28px;margin-bottom:4px;background:rgba(255,121,29,0.15);border:1px solid rgba(255,121,29,0.3);"><div class="mock-avatar" style="width:20px;height:20px;background:#348D00;"></div><div class="mock-text"></div></div>
+                            <div class="mock-row" style="height:28px;"><div class="mock-avatar" style="width:20px;height:20px;background:#ED542C;"></div><div class="mock-text"></div></div>
+                        </div>
+                        <div style="flex:1.2;padding:8px;background:rgba(255,255,255,0.02);border-radius:0 8px 8px 0;">
+                            <div style="text-align:center;color:white;font-weight:600;font-size:11px;padding:4px;">Detail</div>
+                            <div style="background:rgba(255,255,255,0.05);border-radius:6px;padding:6px;margin:4px 0;">
+                                <div style="color:#94a3b8;font-size:8px;">Username</div>
+                                <div style="color:white;font-size:9px;">user@gmail.com</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.05);border-radius:6px;padding:6px;margin:4px 0;">
+                                <div style="color:#94a3b8;font-size:8px;">Password</div>
+                                <div style="color:white;font-size:9px;">&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Duplicate set for infinite scroll -->
+                <div class="screenshot-item">
+                    <div class="screen-title">Vault List</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="text-align:center;color:#FF791D;font-weight:700;font-size:14px;padding:8px;">&#128274; hPass</div>
+                        <div class="mock-row"><div class="mock-avatar"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#174785;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#348D00;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#ED542C;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#9C27B0;"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar"></div><div class="mock-text"></div></div>
+                        <div class="mock-row"><div class="mock-avatar" style="background:#174785;"></div><div class="mock-text"></div></div>
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screen-title">Item Detail</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="color:#94a3b8;font-size:11px;padding:4px;">&#8592; Back</div>
+                        <div style="text-align:center;font-weight:700;color:white;font-size:16px;padding:12px;">Google</div>
+                        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px;margin:4px 0;">
+                            <div style="color:#94a3b8;font-size:10px;">Username</div>
+                            <div style="color:white;font-size:12px;">user@email.com</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px;margin:4px 0;">
+                            <div style="color:#94a3b8;font-size:10px;">Password</div>
+                            <div style="color:white;font-size:12px;">&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px;margin:4px 0;">
+                            <div style="color:#94a3b8;font-size:10px;">OTP</div>
+                            <div style="color:#FF791D;font-size:16px;font-weight:700;">482 391</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screen-title">Autofill</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#f5f5f5,#e0e0e0);">
+                        <div style="text-align:center;color:#333;font-size:12px;padding:8px;">Chrome - Login</div>
+                        <div style="background:white;border-radius:8px;padding:10px;border:1px solid #ddd;">
+                            <div style="color:#999;font-size:10px;">Email</div>
+                            <div style="color:#333;font-size:11px;">user@email.com</div>
+                        </div>
+                        <div style="height:8px;"></div>
+                        <div style="background:#FF791D;border-radius:8px;padding:8px;display:flex;align-items:center;gap:6px;">
+                            <div style="width:20px;height:20px;background:white;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;">&#128274;</div>
+                            <div>
+                                <div style="color:white;font-size:10px;font-weight:600;">Google Account</div>
+                                <div style="color:rgba(255,255,255,0.8);font-size:9px;">user@email.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screen-title">Password Generator</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="color:white;font-weight:700;font-size:14px;padding:8px;">Generate Password</div>
+                        <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:12px;font-family:monospace;color:#FF791D;font-size:11px;word-break:break-all;">
+                            kR7#mP9$xL2!nQ4&amp;
+                        </div>
+                        <div style="margin-top:10px;">
+                            <div style="color:#94a3b8;font-size:10px;">Length: 16</div>
+                            <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-top:4px;">
+                                <div style="height:100%;width:50%;background:var(--primary);border-radius:2px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screen-title">Settings</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);">
+                        <div style="color:#174785;font-weight:700;font-size:14px;padding:8px;">&#9881; Settings</div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(255,121,29,0.3);"></div></div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(23,71,133,0.3);"></div></div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(52,141,0,0.3);"></div></div>
+                        <div class="mock-row" style="margin-bottom:6px;"><div class="mock-text short" style="background:rgba(237,84,44,0.3);"></div></div>
+                        <div class="mock-row"><div class="mock-text short" style="background:rgba(156,39,176,0.3);"></div></div>
+                    </div>
+                </div>
+                <div class="screenshot-item" style="width:380px;">
+                    <div class="screen-title">Tablet Mode</div>
+                    <div class="screen-mock" style="background:linear-gradient(180deg,#0f1419,#1a2332);flex-direction:row;gap:1px;">
+                        <div style="width:80px;flex-shrink:0;background:rgba(255,255,255,0.03);padding:8px;border-radius:8px 0 0 8px;">
+                            <div style="width:24px;height:24px;background:var(--primary);border-radius:50%;margin:0 auto 8px;"></div>
+                            <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin-bottom:6px;"></div>
+                            <div style="height:6px;background:rgba(255,121,29,0.3);border-radius:3px;margin-bottom:6px;"></div>
+                            <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin-bottom:6px;"></div>
+                            <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"></div>
+                        </div>
+                        <div style="flex:1;padding:8px;">
+                            <div class="mock-row" style="height:28px;margin-bottom:4px;"><div class="mock-avatar" style="width:20px;height:20px;"></div><div class="mock-text"></div></div>
+                            <div class="mock-row" style="height:28px;margin-bottom:4px;"><div class="mock-avatar" style="width:20px;height:20px;background:#174785;"></div><div class="mock-text"></div></div>
+                            <div class="mock-row" style="height:28px;margin-bottom:4px;background:rgba(255,121,29,0.15);border:1px solid rgba(255,121,29,0.3);"><div class="mock-avatar" style="width:20px;height:20px;background:#348D00;"></div><div class="mock-text"></div></div>
+                            <div class="mock-row" style="height:28px;"><div class="mock-avatar" style="width:20px;height:20px;background:#ED542C;"></div><div class="mock-text"></div></div>
+                        </div>
+                        <div style="flex:1.2;padding:8px;background:rgba(255,255,255,0.02);border-radius:0 8px 8px 0;">
+                            <div style="text-align:center;color:white;font-weight:600;font-size:11px;padding:4px;">Detail</div>
+                            <div style="background:rgba(255,255,255,0.05);border-radius:6px;padding:6px;margin:4px 0;">
+                                <div style="color:#94a3b8;font-size:8px;">Username</div>
+                                <div style="color:white;font-size:9px;">user@gmail.com</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.05);border-radius:6px;padding:6px;margin:4px 0;">
+                                <div style="color:#94a3b8;font-size:8px;">Password</div>
+                                <div style="color:white;font-size:9px;">&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download -->
+    <section class="download-section" id="download">
+        <div class="download-card">
+            <h2>&#11015; Download hPass</h2>
+            <p>
+                Download the latest APK to try hPass on your Android device.
+                Enable "Install from unknown sources" in your device settings, then install the APK.
+            </p>
+            <a href="releases/hpass-v1.0.34.apk" class="btn-primary" style="font-size:1.1rem;">
+                &#128229; Download APK (v1.0.34)
+            </a>
+            <div class="download-info">
+                <div class="info-item">
+                    <div class="value">v1.0.34</div>
+                    <div class="label">Version</div>
+                </div>
+                <div class="info-item">
+                    <div class="value">14.8 MB</div>
+                    <div class="label">Size</div>
+                </div>
+                <div class="info-item">
+                    <div class="value">Android 8+</div>
+                    <div class="label">Requires</div>
+                </div>
+                <div class="info-item">
+                    <div class="value">Feb 2026</div>
+                    <div class="label">Updated</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback -->
+    <section class="feedback" id="feedback">
+        <div class="section-header">
+            <h2>Your Feedback Matters</h2>
+            <p>Help us improve hPass by reporting bugs and sharing ideas</p>
+        </div>
+        <div class="feedback-grid">
+            <a href="https://github.com/haoquangviet/hPass/issues/new?template=bug_report.md&labels=bug" class="feedback-card">
+                <div class="icon">&#128027;</div>
+                <h3>Report a Bug</h3>
+                <p>Found something broken? Let us know so we can fix it. Include steps to reproduce and your device info.</p>
+            </a>
+            <a href="https://github.com/haoquangviet/hPass/issues/new?template=feature_request.md&labels=enhancement" class="feedback-card">
+                <div class="icon">&#128161;</div>
+                <h3>Request a Feature</h3>
+                <p>Have an idea to make hPass better? We'd love to hear your suggestions for new features.</p>
+            </a>
+            <a href="https://github.com/haoquangviet/hPass/issues/new?template=ui_feedback.md&labels=ui" class="feedback-card">
+                <div class="icon">&#127912;</div>
+                <h3>UI/UX Feedback</h3>
+                <p>Something doesn't feel right? Share your thoughts on the design, layout, or user experience.</p>
+            </a>
+            <a href="https://github.com/haoquangviet/hPass/issues" class="feedback-card">
+                <div class="icon">&#128214;</div>
+                <h3>View All Issues</h3>
+                <p>Browse existing reports, upvote issues you care about, and track our progress on fixes.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            &copy; 2026 hPass by <a href="https://hqv.biz">Hao Quang Viet</a>.
+            Enterprise Password Manager for Android.
+        </p>
+    </footer>
+</body>
+</html>
