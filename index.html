@@ -599,6 +599,51 @@
             line-height: 1.5;
         }
 
+
+        /* Privacy section */
+        .privacy-section {
+            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .privacy-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .privacy-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .privacy-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .privacy-card .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .privacy-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .privacy-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
         /* Footer */
         footer {
             padding: 2rem;
@@ -629,11 +674,19 @@
                 grid-template-columns: 1fr 1fr;
             }
 
+            .privacy-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+
             .nav-links { display: none; }
         }
 
         @media (max-width: 600px) {
             .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .privacy-cards {
                 grid-template-columns: 1fr;
             }
 
@@ -662,6 +715,7 @@
             <a href="#screenshots">Screenshots</a>
             <a href="#download">Download</a>
             <a href="#feedback">Feedback</a>
+            <a href="#privacy">Privacy</a>
         </div>
         <a href="#download" class="btn-download">&#11015; Download APK</a>
     </nav>
@@ -1063,6 +1117,34 @@
                 <h3>View All Issues</h3>
                 <p>Browse existing reports, upvote issues you care about, and track our progress on fixes.</p>
             </a>
+        </div>
+    </section>
+
+
+    <!-- Privacy & Data -->
+    <section class="privacy-section" id="privacy">
+        <h2>&#128274; Quyền riêng tư & Dữ liệu</h2>
+        <div class="privacy-cards">
+            <div class="privacy-card">
+                <div class="card-icon">&#128241;</div>
+                <h3>Local-First</h3>
+                <p>Toàn bộ dữ liệu mật khẩu được mã hóa và lưu trữ trực tiếp trên thiết bị của bạn. Không có dữ liệu nào được gửi đi khi bạn không chủ động đồng bộ.</p>
+            </div>
+            <div class="privacy-card">
+                <div class="card-icon">&#128683;</div>
+                <h3>Không thu thập dữ liệu</h3>
+                <p>hPass không thu thập, không theo dõi và không chia sẻ bất kỳ thông tin cá nhân nào của người dùng. Dữ liệu của bạn hoàn toàn thuộc về bạn.</p>
+            </div>
+            <div class="privacy-card">
+                <div class="card-icon">&#128100;</div>
+                <h3>Cá nhân (Personal)</h3>
+                <p>Bản cá nhân hoạt động hoàn toàn offline. Mọi dữ liệu được mã hóa AES-256 và lưu trong thiết bị, không cần tài khoản, không cần internet.</p>
+            </div>
+            <div class="privacy-card">
+                <div class="card-icon">&#127970;</div>
+                <h3>Doanh nghiệp (Enterprise)</h3>
+                <p>Khi sử dụng dịch vụ hOne, dữ liệu được đồng bộ lên máy chủ hOne riêng của doanh nghiệp. Không qua bên thứ ba, không cloud công cộng.</p>
+            </div>
         </div>
     </section>
 
