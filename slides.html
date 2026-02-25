@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hPass - Slide Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ========== A4 LANDSCAPE SLIDE DECK ========== */
+        /* Mỗi .slide = đúng 1 trang A4 ngang khi in PDF */
+        @page {
+            size: 297mm 210mm;
+            margin: 0;
+        }
+
+        :root {
+            --orange: #FF791D;
+            --blue: #174785;
+            --green: #348D00;
+            --red: #ED542C;
+            --dark: #0a1628;
+            --navy: #0f2847;
+            --text: #1a1a2e;
+            --muted: #6b7280;
+            --light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #e5e7eb;
+        }
+
+        /* Slide = đúng 1 trang A4 ngang */
+        .slide {
+            width: 297mm;
+            height: 210mm;
+            padding: 28mm 32mm;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+            break-after: page;
+            background: white;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .slide:last-child {
+            page-break-after: avoid;
+            margin-bottom: 0;
+        }
+
+        /* Khi in: bỏ shadow, margin */
+        @media print {
+            body { background: white; }
+            .slide {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* ========== SHARED COMPONENTS ========== */
+        .slide-number {
+            position: absolute;
+            bottom: 12mm;
+            right: 16mm;
+            font-size: 11px;
+            color: rgba(0,0,0,0.25);
+            font-weight: 500;
+        }
+
+        .brand-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4mm;
+            background: linear-gradient(90deg, var(--orange) 0%, var(--blue) 33%, var(--green) 66%, var(--red) 100%);
+        }
+
+        .logo-small {
+            position: absolute;
+            bottom: 12mm;
+            left: 16mm;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(0,0,0,0.3);
+        }
+
+        .logo-small .icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .logo-small .icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .tag.orange { color: var(--orange); }
+        .tag.blue { color: var(--blue); }
+        .tag.green { color: var(--green); }
+
+        .slide-title {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .slide-subtitle {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.5;
+            max-width: 600px;
+        }
+
+        /* ========== SLIDE 1: COVER ========== */
+        .slide-cover {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--navy) 60%, #1a3a5c 100%);
+            display: flex;
+            align-items: center;
+            padding: 0;
+            color: white;
+        }
+
+        .slide-cover::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 60%;
+            height: 160%;
+            background: radial-gradient(ellipse, rgba(255,121,29,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide-cover::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 50%;
+            height: 140%;
+            background: radial-gradient(ellipse, rgba(23,71,133,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cover-left {
+            flex: 1;
+            padding: 32mm 20mm 32mm 36mm;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cover-right {
+            width: 40%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            padding-right: 20mm;
+        }
+
+        .cover-right::before {
+            content: '';
+            position: absolute;
+            width: 280px;
+            height: 440px;
+            background: radial-gradient(ellipse, rgba(255,121,29,0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .cover-logo .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255,121,29,0.3);
+        }
+
+        .cover-logo .icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cover-logo span {
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .cover-logo span b {
+            color: var(--orange);
+        }
+
+        .cover-title {
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 1.15;
+            color: white;
+            margin-bottom: 18px;
+        }
+
+        .cover-title .hl { color: var(--orange); }
+        .cover-title .hl-blue { color: #5ba3e6; }
+
+        .cover-desc {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 28px;
+            max-width: 420px;
+        }
+
+        .cover-desc strong {
+            color: rgba(255,255,255,0.95);
+        }
+
+        .cover-badges {
+            display: flex;
+            gap: 12px;
+        }
+
+        .cover-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .cover-badge i { font-size: 14px; }
+        .cover-badge i.fa-shield-alt { color: var(--green); }
+        .cover-badge i.fa-sync-alt { color: #5ba3e6; }
+        .cover-badge i.fa-fingerprint { color: var(--orange); }
+
+        .phone-mini {
+            position: relative;
+            z-index: 2;
+            width: 240px;
+        }
+
+        .phone-mini-frame {
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+            aspect-ratio: 9 / 18;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-mini-screen {
+            background: linear-gradient(180deg, #111827 0%, #0a1628 100%);
+            border-radius: 22px;
+            padding: 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pms-notch {
+            width: 70px;
+            height: 18px;
+            background: #1a1a1a;
+            border-radius: 0 0 12px 12px;
+            margin: -14px auto 8px;
+        }
+
+        .pms-search {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 7px 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.3);
+            font-size: 9px;
+        }
+
+        .pms-search i { font-size: 9px; }
+
+        .pms-chips {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        .pms-chip {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 7px;
+            border-radius: 12px;
+            font-size: 7px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            white-space: nowrap;
+        }
+        .pms-chip i { font-size: 6px; }
+        .pms-chip.active {
+            background: rgba(255,121,29,0.2);
+            border-color: rgba(255,121,29,0.4);
+            color: var(--orange);
+        }
+
+        .pms-header {
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .pms-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+        }
+
+        .pms-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .pms-icon.g { background: linear-gradient(135deg, #4285f4, #34a853); }
+        .pms-icon.b { background: linear-gradient(135deg, var(--orange), var(--red)); }
+        .pms-icon.gh { background: #333; }
+        .pms-icon.ms { background: linear-gradient(135deg, #00a4ef, #7fba00); }
+        .pms-icon.slack { background: linear-gradient(135deg, #611f69, #e01e5a); }
+
+        .pms-info { min-width: 0; flex: 1; }
+        .pms-name { color: white; font-size: 10px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pms-user { color: rgba(255,255,255,0.4); font-size: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pms-strength {
+            margin-left: auto;
+            width: 32px;
+            height: 3px;
+            border-radius: 2px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        .pms-strength-bar {
+            height: 100%;
+            border-radius: 2px;
+        }
+        .pms-strength-bar.strong { width: 100%; background: var(--green); }
+        .pms-strength-bar.medium { width: 66%; background: var(--orange); }
+
+        /* ========== SLIDE 2: STORY ========== */
+        .slide-story {
+            display: flex;
+            gap: 36px;
+            align-items: stretch;
+        }
+
+        .story-left {
+            flex: 1;
+        }
+
+        .story-right {
+            width: 42%;
+            background: linear-gradient(135deg, var(--dark), var(--navy));
+            border-radius: 20px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .problem-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .problem-item:last-child { border-bottom: none; }
+
+        .problem-num {
+            width: 28px;
+            height: 28px;
+            background: rgba(237,84,44,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red);
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .problem-item p {
+            color: rgba(255,255,255,0.85);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .story-text {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .story-text strong {
+            color: var(--text);
+        }
+
+        .story-quote-box {
+            background: linear-gradient(135deg, rgba(255,121,29,0.06), rgba(23,71,133,0.06));
+            border-left: 4px solid var(--orange);
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+            margin-top: 16px;
+        }
+
+        .story-quote-box p {
+            font-size: 13px;
+            font-style: italic;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .story-author-avatar {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 11px;
+        }
+
+        .story-author strong { font-size: 12px; display: block; color: var(--text); }
+        .story-author span { font-size: 10px; color: var(--muted); }
+
+        /* ========== SLIDE 3: FEATURES ========== */
+        .features-flex {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 6px;
+        }
+
+        .feat-card {
+            background: var(--light);
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .feat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .feat-icon.o { background: rgba(255,121,29,0.1); color: var(--orange); }
+        .feat-icon.b { background: rgba(23,71,133,0.1); color: var(--blue); }
+        .feat-icon.g { background: rgba(52,141,0,0.1); color: var(--green); }
+
+        .feat-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .feat-card p {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        /* ========== SLIDE 4: SYNC ========== */
+        .slide-sync {
+            background: linear-gradient(135deg, var(--dark), var(--navy));
+            color: white;
+        }
+
+        .slide-sync .tag { color: var(--orange); }
+        .slide-sync .slide-title { color: white; }
+        .slide-sync .slide-subtitle { color: rgba(255,255,255,0.7); }
+
+        .sync-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            margin: 24px 0;
+        }
+
+        .sync-node {
+            text-align: center;
+        }
+
+        .sync-node-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 8px;
+        }
+
+        .sync-node-icon.primary {
+            background: linear-gradient(135deg, rgba(255,121,29,0.2), rgba(23,71,133,0.2));
+            border-color: var(--orange);
+        }
+
+        .sync-node h4 { font-size: 13px; font-weight: 600; }
+        .sync-node span { font-size: 10px; color: rgba(255,255,255,0.5); }
+
+        .sync-arrows {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            color: var(--orange);
+            font-size: 18px;
+        }
+
+        .sync-arrows small {
+            font-size: 8px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sync-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .sync-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .sync-card i {
+            font-size: 22px;
+            color: var(--orange);
+            margin-bottom: 8px;
+        }
+
+        .sync-card h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .sync-card p {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.4;
+        }
+
+        /* ========== SLIDE 5: SECURITY ========== */
+        .security-flex {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .security-text { flex: 1; }
+
+        .sec-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .sec-item:last-child { border-bottom: none; }
+
+        .sec-check {
+            width: 24px;
+            height: 24px;
+            background: rgba(52,141,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green);
+            font-size: 10px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .sec-item strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .sec-item span {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .security-visual {
+            width: 40%;
+        }
+
+        .sec-layer {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .sec-layer-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .sec-layer-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .sec-layer-icon.ks { background: rgba(23,71,133,0.1); color: var(--blue); }
+        .sec-layer-icon.bio { background: rgba(52,141,0,0.1); color: var(--green); }
+        .sec-layer-icon.enc { background: rgba(255,121,29,0.1); color: var(--orange); }
+
+        .sec-layer-title { font-size: 13px; font-weight: 700; color: var(--text); }
+        .sec-layer-sub { font-size: 10px; color: var(--muted); }
+
+        .sec-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .sec-tag {
+            background: var(--light);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* ========== SLIDE 6: COMPARISON ========== */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comp-table thead {
+            background: linear-gradient(135deg, var(--dark), var(--navy));
+        }
+
+        .comp-table th {
+            padding: 12px 14px;
+            text-align: left;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .comp-table th.hp {
+            background: rgba(255,121,29,0.25);
+            text-align: center;
+        }
+
+        .comp-table td {
+            padding: 9px 14px;
+            font-size: 11.5px;
+            color: var(--text);
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .comp-table td:first-child {
+            font-weight: 500;
+        }
+
+        .comp-table td.hp {
+            text-align: center;
+            background: rgba(255,121,29,0.03);
+        }
+
+        .comp-table tbody tr:last-child td { border-bottom: none; }
+
+        .comp-table .y { color: var(--green); font-size: 16px; }
+        .comp-table .n { color: #d1d5db; font-size: 16px; }
+        .comp-table .p { color: #fbbf24; font-size: 16px; }
+
+        .comp-note {
+            text-align: center;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 12px;
+        }
+
+        /* ========== SLIDE 7: BENEFITS + PRICING ========== */
+        .bp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .bp-left, .bp-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bp-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ben-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 14px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .ben-num {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .ben-item h4 {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .ben-item p {
+            font-size: 10px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .price-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            flex: 1;
+        }
+
+        .price-card {
+            border: 1.5px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card.pop {
+            border-color: var(--orange);
+            position: relative;
+        }
+
+        .price-card.pop::before {
+            content: 'PHỔ BIẾN';
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            color: white;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 10px;
+            letter-spacing: 1px;
+        }
+
+        .price-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .price-val {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--orange);
+            margin: 6px 0;
+        }
+
+        .price-val small {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--muted);
+        }
+
+        .price-desc {
+            font-size: 10px;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .price-list {
+            list-style: none;
+            text-align: left;
+            flex: 1;
+        }
+
+        .price-list li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: var(--text);
+            padding: 3px 0;
+        }
+
+        .price-list li i {
+            color: var(--green);
+            font-size: 10px;
+        }
+
+        /* ========== SLIDE 8: CTA ========== */
+        .slide-cta {
+            background:
+                linear-gradient(to bottom right, var(--orange), transparent 50%),
+                linear-gradient(to bottom left, var(--blue), transparent 50%),
+                linear-gradient(to top right, var(--green), transparent 50%),
+                linear-gradient(to top left, var(--red), transparent 50%),
+                var(--dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .cta-inner {
+            max-width: 600px;
+        }
+
+        .cta-logo {
+            width: 72px;
+            height: 72px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .cta-title {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .cta-btns {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .cta-btn {
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .cta-btn.white {
+            background: white;
+            color: var(--orange);
+        }
+
+        .cta-btn.ghost {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.4);
+            color: white;
+        }
+
+        .cta-contact {
+            margin-top: 28px;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .cta-contact i {
+            color: var(--orange);
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<div class="slide slide-cover">
+    <div class="cover-left">
+        <div class="cover-logo">
+            <div class="icon"><img src="hpass-icon.png" alt="hPass"></div>
+            <span>h<b>Pass</b></span>
+        </div>
+
+        <h1 class="cover-title">
+            Quản lý mật khẩu<br>
+            <span class="hl">an toàn</span> cho<br>
+            <span class="hl-blue">doanh nghiệp</span>
+        </h1>
+
+        <p class="cover-desc">
+            Trình quản lý mật khẩu đa nền tảng, tích hợp
+            đồng bộ 2 chiều với <strong>hOne - Hệ thống vận hành doanh nghiệp</strong>.
+        </p>
+
+        <div class="cover-badges">
+            <div class="cover-badge">
+                <i class="fas fa-shield-alt"></i>
+                AES-256
+            </div>
+            <div class="cover-badge">
+                <i class="fas fa-sync-alt"></i>
+                Sync hOne
+            </div>
+            <div class="cover-badge">
+                <i class="fas fa-fingerprint"></i>
+                Biometric
+            </div>
+        </div>
+    </div>
+
+    <div class="cover-right">
+        <div class="phone-mini">
+            <div class="phone-mini-frame">
+                <div class="phone-mini-screen">
+                    <div class="pms-notch"></div>
+                    <div class="pms-header"><span style="color:var(--orange);font-weight:700;font-size:12px;">hPass</span></div>
+                    <div class="pms-search"><i class="fas fa-search"></i> Tìm kiếm mật khẩu...</div>
+                    <div class="pms-chips">
+                        <div class="pms-chip"><i class="fas fa-heart"></i> Yêu thích</div>
+                        <div class="pms-chip active">Tất cả</div>
+                        <div class="pms-chip"><i class="fas fa-user"></i> Đăng nhập</div>
+                        <div class="pms-chip"><i class="fas fa-credit-card"></i> Thẻ</div>
+                    </div>
+                    <div class="pms-item">
+                        <div class="pms-icon g"><i class="fab fa-google"></i></div>
+                        <div class="pms-info">
+                            <div class="pms-name">Google Workspace</div>
+                            <div class="pms-user">admin@company.vn</div>
+                        </div>
+                        <div class="pms-strength"><div class="pms-strength-bar strong"></div></div>
+                    </div>
+                    <div class="pms-item">
+                        <div class="pms-icon b"><i class="fas fa-university"></i></div>
+                        <div class="pms-info">
+                            <div class="pms-name">Internet Banking</div>
+                            <div class="pms-user">ketoan@company.vn</div>
+                        </div>
+                        <div class="pms-strength"><div class="pms-strength-bar strong"></div></div>
+                    </div>
+                    <div class="pms-item">
+                        <div class="pms-icon gh"><i class="fab fa-github"></i></div>
+                        <div class="pms-info">
+                            <div class="pms-name">GitHub Enterprise</div>
+                            <div class="pms-user">dev-team</div>
+                        </div>
+                        <div class="pms-strength"><div class="pms-strength-bar medium"></div></div>
+                    </div>
+                    <div class="pms-item">
+                        <div class="pms-icon ms"><i class="fab fa-microsoft"></i></div>
+                        <div class="pms-info">
+                            <div class="pms-name">Microsoft 365</div>
+                            <div class="pms-user">office@company.vn</div>
+                        </div>
+                        <div class="pms-strength"><div class="pms-strength-bar strong"></div></div>
+                    </div>
+                    <div class="pms-item">
+                        <div class="pms-icon slack"><i class="fab fa-slack"></i></div>
+                        <div class="pms-info">
+                            <div class="pms-name">Slack</div>
+                            <div class="pms-user">workspace</div>
+                        </div>
+                        <div class="pms-strength"><div class="pms-strength-bar strong"></div></div>
+                    </div>
+                    <div class="pms-item" style="opacity:0.5">
+                        <div class="pms-icon" style="background:linear-gradient(135deg,#ff4500,#ff8717)"><i class="fas fa-server"></i></div>
+                        <div class="pms-info">
+                            <div class="pms-name">AWS Console</div>
+                            <div class="pms-user">devops@company.vn</div>
+                        </div>
+                        <div class="pms-strength"><div class="pms-strength-bar strong"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-bar"></div>
+    <div class="slide-number">01 / 08</div>
+</div>
+
+<!-- ============ SLIDE 2: STORY ============ -->
+<div class="slide">
+    <div class="slide-story">
+        <div class="story-left">
+            <div class="tag orange"><i class="fas fa-lightbulb"></i> CÂU CHUYỆN RA ĐỜI</div>
+            <h2 class="slide-title">Từ thực tế của HQV<br>và các khách hàng doanh nghiệp</h2>
+
+            <p class="story-text">
+                Khi điều hành doanh nghiệp, tôi nhận ra:
+                <strong>không có cách nào chia sẻ mật khẩu an toàn</strong> cho team.
+                Mật khẩu gửi tràn lan qua chat, ai đang giữ gì — không ai biết.
+            </p>
+            <p class="story-text">
+                Đã thử Bitwarden, 1Password, LastPass... tất cả đều <strong>đắt đỏ</strong>
+                ($5-8/user/tháng), không tích hợp quy trình, nhân viên kháng cự.
+            </p>
+
+            <div class="story-quote-box">
+                <p>"hPass ra đời không chỉ là password manager, mà là giải pháp TÍCH HỢP HOÀN TOÀN vào hOne — nơi team đã làm việc hàng ngày."</p>
+                <div class="story-author">
+                    <div class="story-author-avatar">TVQ</div>
+                    <div>
+                        <strong>Trần Văn Quyết</strong>
+                        <span>CEO — Công ty TNHH Phần Mềm Hào Quang Việt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="story-right">
+            <div class="problem-item">
+                <div class="problem-num"><i class="fas fa-exclamation-triangle"></i></div>
+                <p>Gửi mật khẩu qua Zalo, Telegram — không lịch sử, không kiểm soát ai đang có</p>
+            </div>
+            <div class="problem-item">
+                <div class="problem-num"><i class="fas fa-user-times"></i></div>
+                <p>Nhân viên nghỉ việc — phải đổi hàng chục mật khẩu, dễ bỏ sót gây mất an toàn</p>
+            </div>
+            <div class="problem-item">
+                <div class="problem-num"><i class="fas fa-sticky-note"></i></div>
+                <p>Dùng chung 1 mật khẩu cho nhiều dịch vụ, ghi vào giấy note dán trên màn hình</p>
+            </div>
+            <div class="problem-item">
+                <div class="problem-num"><i class="fas fa-dollar-sign"></i></div>
+                <p>Phần mềm nước ngoài đắt đỏ $5-8/user/tháng, không hỗ trợ tiếng Việt</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-bar"></div>
+    <div class="logo-small"><div class="icon"><img src="hpass-icon.png" alt="hPass"></div> hPass</div>
+    <div class="slide-number">02 / 08</div>
+</div>
+
+<!-- ============ SLIDE 3: FEATURES ============ -->
+<div class="slide">
+    <div class="tag orange"><i class="fas fa-star"></i> TÍNH NĂNG NỔI BẬT</div>
+    <h2 class="slide-title">Mọi thứ bạn cần để quản lý mật khẩu</h2>
+    <p class="slide-subtitle" style="margin-bottom:18px;">Thiết kế đặc biệt cho doanh nghiệp Việt Nam với đầy đủ tính năng chuyên nghiệp</p>
+
+    <div class="features-flex">
+        <div class="feat-card">
+            <div class="feat-icon o"><i class="fas fa-fingerprint"></i></div>
+            <h3>Mở khóa sinh trắc học</h3>
+            <p>Vân tay hoặc Face ID với chuẩn bảo mật cao nhất, kết hợp mã PIN dự phòng.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon b"><i class="fas fa-magic"></i></div>
+            <h3>Tự động điền thông minh</h3>
+            <p>Autofill nhận diện 70+ pattern form đăng nhập. Hỗ trợ đăng nhập nhiều bước, OTP.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon g"><i class="fas fa-clock"></i></div>
+            <h3>TOTP 2FA tích hợp</h3>
+            <p>Tạo mã 2FA ngay trong app. Không cần Google Authenticator, đồng bộ TOTP qua hOne.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon o"><i class="fas fa-folder-tree"></i></div>
+            <h3>Tổ chức linh hoạt</h3>
+            <p>Thư mục phân cấp, danh mục, nhãn màu tùy chỉnh. Tìm kiếm toàn văn nhanh.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon b"><i class="fas fa-random"></i></div>
+            <h3>Tạo mật khẩu mạnh</h3>
+            <p>Generator 8-128 ký tự. Tùy chỉnh hoa, thường, số, ký tự đặc biệt. Đánh giá 4 cấp.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon g"><i class="fas fa-file-import"></i></div>
+            <h3>Import/Export dễ dàng</h3>
+            <p>Nhập từ Bitwarden, Chrome, LastPass. Xuất JSON tương thích, sao lưu mã hóa.</p>
+        </div>
+    </div>
+
+    <div class="brand-bar"></div>
+    <div class="logo-small"><div class="icon"><img src="hpass-icon.png" alt="hPass"></div> hPass</div>
+    <div class="slide-number">03 / 08</div>
+</div>
+
+<!-- ============ SLIDE 4: SYNC ============ -->
+<div class="slide slide-sync">
+    <div class="tag"><i class="fas fa-sync-alt"></i> ĐỒNG BỘ 2 CHIỀU</div>
+    <h2 class="slide-title">Tích hợp hoàn hảo với hOne</h2>
+    <p class="slide-subtitle">Mật khẩu tạo trên điện thoại tự động xuất hiện trên web hOne và ngược lại</p>
+
+    <div class="sync-flow">
+        <div class="sync-node">
+            <div class="sync-node-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h4>hPass Mobile</h4>
+            <span>Ứng dụng di động</span>
+        </div>
+        <div class="sync-arrows">
+            <i class="fas fa-arrow-right"></i>
+            <i class="fas fa-arrow-left"></i>
+            <small>Realtime</small>
+        </div>
+        <div class="sync-node">
+            <div class="sync-node-icon primary"><i class="fas fa-server"></i></div>
+            <h4>hOne Server</h4>
+            <span>Encrypted API</span>
+        </div>
+        <div class="sync-arrows">
+            <i class="fas fa-arrow-right"></i>
+            <i class="fas fa-arrow-left"></i>
+            <small>Realtime</small>
+        </div>
+        <div class="sync-node">
+            <div class="sync-node-icon"><i class="fas fa-laptop"></i></div>
+            <h4>hOne Web</h4>
+            <span>Password Manager</span>
+        </div>
+    </div>
+
+    <div class="sync-cards">
+        <div class="sync-card">
+            <i class="fas fa-wifi"></i>
+            <h4>Offline-First</h4>
+            <p>Truy cập đầy đủ khi không có mạng, đồng bộ khi online</p>
+        </div>
+        <div class="sync-card">
+            <i class="fas fa-users"></i>
+            <h4>Chia sẻ Team</h4>
+            <p>Phân quyền mật khẩu theo team, biết ai có quyền truy cập</p>
+        </div>
+        <div class="sync-card">
+            <i class="fas fa-history"></i>
+            <h4>Xử lý xung đột</h4>
+            <p>Tự động xử lý conflict khi chỉnh sửa đồng thời</p>
+        </div>
+        <div class="sync-card">
+            <i class="fas fa-bolt"></i>
+            <h4>Background Sync</h4>
+            <p>WorkManager sync mỗi 15 phút, tiết kiệm pin</p>
+        </div>
+    </div>
+
+    <div class="brand-bar"></div>
+    <div class="logo-small" style="color:rgba(255,255,255,0.3)"><div class="icon"><img src="hpass-icon.png" alt="hPass"></div> hPass</div>
+    <div class="slide-number" style="color:rgba(255,255,255,0.3)">04 / 08</div>
+</div>
+
+<!-- ============ SLIDE 5: SECURITY ============ -->
+<div class="slide">
+    <div class="tag green"><i class="fas fa-shield-alt"></i> BẢO MẬT ĐA LỚP</div>
+    <h2 class="slide-title">Kiến trúc bảo mật cấp doanh nghiệp</h2>
+
+    <div class="security-flex">
+        <div class="security-text">
+            <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;">
+                Mô hình "zero-knowledge" — ngay cả máy chủ hOne cũng không thể đọc mật khẩu của bạn.
+                Tất cả được mã hóa trước khi rời thiết bị.
+            </p>
+            <div class="sec-item">
+                <div class="sec-check"><i class="fas fa-check"></i></div>
+                <div>
+                    <strong>Mã hóa AES-256-CBC</strong>
+                    <span>Chuẩn mã hóa quân sự với IV ngẫu nhiên 16 byte cho mỗi item</span>
+                </div>
+            </div>
+            <div class="sec-item">
+                <div class="sec-check"><i class="fas fa-check"></i></div>
+                <div>
+                    <strong>PBKDF2 — 100,000 iterations</strong>
+                    <span>Dẫn xuất khóa từ PIN chống brute-force attack</span>
+                </div>
+            </div>
+            <div class="sec-item">
+                <div class="sec-check"><i class="fas fa-check"></i></div>
+                <div>
+                    <strong>Hardware Keystore</strong>
+                    <span>Master key bảo vệ bởi chip bảo mật phần cứng (TEE)</span>
+                </div>
+            </div>
+            <div class="sec-item">
+                <div class="sec-check"><i class="fas fa-check"></i></div>
+                <div>
+                    <strong>Auto-lock & Clipboard Clear</strong>
+                    <span>Tự khóa khi không dùng, xóa clipboard sau 30 giây</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="security-visual">
+            <div class="sec-layer">
+                <div class="sec-layer-header">
+                    <div class="sec-layer-icon ks"><i class="fas fa-microchip"></i></div>
+                    <div>
+                        <div class="sec-layer-title">Hardware Keystore</div>
+                        <div class="sec-layer-sub">Hardware Security Module</div>
+                    </div>
+                </div>
+                <div class="sec-tags">
+                    <span class="sec-tag">AES-256-GCM</span>
+                    <span class="sec-tag">TEE Protected</span>
+                    <span class="sec-tag">Master Key</span>
+                </div>
+            </div>
+            <div class="sec-layer">
+                <div class="sec-layer-header">
+                    <div class="sec-layer-icon bio"><i class="fas fa-fingerprint"></i></div>
+                    <div>
+                        <div class="sec-layer-title">Biometric + PIN</div>
+                        <div class="sec-layer-sub">Xác thực người dùng</div>
+                    </div>
+                </div>
+                <div class="sec-tags">
+                    <span class="sec-tag">Vân tay</span>
+                    <span class="sec-tag">Face ID</span>
+                    <span class="sec-tag">4-6 số PIN</span>
+                </div>
+            </div>
+            <div class="sec-layer">
+                <div class="sec-layer-header">
+                    <div class="sec-layer-icon enc"><i class="fas fa-lock"></i></div>
+                    <div>
+                        <div class="sec-layer-title">Vault Encryption</div>
+                        <div class="sec-layer-sub">Mã hóa từng item riêng biệt</div>
+                    </div>
+                </div>
+                <div class="sec-tags">
+                    <span class="sec-tag">AES-256-CBC</span>
+                    <span class="sec-tag">Random IV</span>
+                    <span class="sec-tag">PKCS5 Padding</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-bar"></div>
+    <div class="logo-small"><div class="icon"><img src="hpass-icon.png" alt="hPass"></div> hPass</div>
+    <div class="slide-number">05 / 08</div>
+</div>
+
+<!-- ============ SLIDE 6: COMPARISON ============ -->
+<div class="slide">
+    <div class="tag blue"><i class="fas fa-balance-scale"></i> SO SÁNH</div>
+    <h2 class="slide-title">hPass vs Các giải pháp khác</h2>
+
+    <table class="comp-table">
+        <thead>
+            <tr>
+                <th style="width:30%">Tính năng</th>
+                <th class="hp" style="width:17.5%">hPass + hOne</th>
+                <th style="width:17.5%">Bitwarden</th>
+                <th style="width:17.5%">1Password</th>
+                <th style="width:17.5%">LastPass</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tích hợp hệ thống vận hành DN</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+            </tr>
+            <tr>
+                <td>Chi phí / user / tháng</td>
+                <td class="hp"><strong style="color:var(--green)">MIỄN PHÍ</strong></td>
+                <td>$4</td>
+                <td>$7.99</td>
+                <td>$4</td>
+            </tr>
+            <tr>
+                <td>Giao diện tiếng Việt</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-minus-circle p"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+            </tr>
+            <tr>
+                <td>Server đặt tại Việt Nam</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+            </tr>
+            <tr>
+                <td>Chia sẻ mật khẩu team</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+            </tr>
+            <tr>
+                <td>TOTP 2FA tích hợp</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-minus-circle p"></i></td>
+            </tr>
+            <tr>
+                <td>Autofill</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+            </tr>
+            <tr>
+                <td>Offline access đầy đủ</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-minus-circle p"></i></td>
+            </tr>
+            <tr>
+                <td>Import Chrome / Bitwarden</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-check-circle y"></i></td>
+            </tr>
+            <tr>
+                <td>Hỗ trợ kỹ thuật tiếng Việt</td>
+                <td class="hp"><i class="fas fa-check-circle y"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+                <td><i class="fas fa-times-circle n"></i></td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="comp-note"><i class="fas fa-info-circle"></i> hPass miễn phí khi sử dụng hOne. Đăng ký hOne để sử dụng ngay.</p>
+
+    <div class="brand-bar"></div>
+    <div class="logo-small"><div class="icon"><img src="hpass-icon.png" alt="hPass"></div> hPass</div>
+    <div class="slide-number">06 / 08</div>
+</div>
+
+<!-- ============ SLIDE 7: BENEFITS + PRICING ============ -->
+<div class="slide">
+    <div class="tag orange"><i class="fas fa-chart-line"></i> LỢI ÍCH & BẢNG GIÁ</div>
+    <h2 class="slide-title" style="margin-bottom:14px;">Tối ưu quản lý mật khẩu doanh nghiệp</h2>
+
+    <div class="bp-grid">
+        <div class="bp-left">
+            <div class="bp-title"><i class="fas fa-rocket"></i> Lợi ích</div>
+            <div class="ben-item">
+                <div class="ben-num">1</div>
+                <div>
+                    <h4>Tiết kiệm $50-100/tháng</h4>
+                    <p>Team 10 người dùng Bitwarden $40/th, 1Password $80/th. hPass MIỄN PHÍ trong hOne.</p>
+                </div>
+            </div>
+            <div class="ben-item">
+                <div class="ben-num">2</div>
+                <div>
+                    <h4>Giảm 90% rủi ro bảo mật</h4>
+                    <p>Không gửi MK qua chat. NV nghỉ việc — thu hồi quyền 1 click.</p>
+                </div>
+            </div>
+            <div class="ben-item">
+                <div class="ben-num">3</div>
+                <div>
+                    <h4>Tiết kiệm 5 phút/NV/ngày</h4>
+                    <p>10 NV × 5 phút × 22 ngày = 18 giờ/tháng. Tự động điền thay gõ tay.</p>
+                </div>
+            </div>
+            <div class="ben-item">
+                <div class="ben-num">4</div>
+                <div>
+                    <h4>Onboard NV mới trong 5 phút</h4>
+                    <p>Join team → có ngay mật khẩu cần thiết. Không chờ ai gửi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bp-right">
+            <div class="bp-title"><i class="fas fa-tag"></i> Bảng giá</div>
+            <div class="price-cards">
+                <div class="price-card">
+                    <h4>Cá nhân</h4>
+                    <div class="price-val">0đ</div>
+                    <div class="price-desc">Không đồng bộ server</div>
+                    <ul class="price-list">
+                        <li><i class="fas fa-check"></i> Lưu trữ không giới hạn</li>
+                        <li><i class="fas fa-check"></i> Autofill mọi app</li>
+                        <li><i class="fas fa-check"></i> TOTP 2FA</li>
+                        <li><i class="fas fa-check"></i> AES-256</li>
+                        <li><i class="fas fa-check"></i> Sinh trắc học</li>
+                    </ul>
+                </div>
+                <div class="price-card pop">
+                    <h4>Doanh nghiệp</h4>
+                    <div class="price-val">0đ <small>/user</small></div>
+                    <div class="price-desc">Có trong gói hOne</div>
+                    <ul class="price-list">
+                        <li><i class="fas fa-check"></i> Tất cả Cá nhân</li>
+                        <li><i class="fas fa-check"></i> Sync hOne 2 chiều</li>
+                        <li><i class="fas fa-check"></i> Chia sẻ team</li>
+                        <li><i class="fas fa-check"></i> Phân quyền nhóm</li>
+                        <li><i class="fas fa-check"></i> Admin quản lý</li>
+                        <li><i class="fas fa-check"></i> Hỗ trợ 24/7</li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h4>Enterprise</h4>
+                    <div class="price-val" style="font-size:20px;">Liên hệ</div>
+                    <div class="price-desc">Self-hosted</div>
+                    <ul class="price-list">
+                        <li><i class="fas fa-check"></i> Tất cả DN</li>
+                        <li><i class="fas fa-check"></i> Server riêng</li>
+                        <li><i class="fas fa-check"></i> SSO/LDAP</li>
+                        <li><i class="fas fa-check"></i> Audit log</li>
+                        <li><i class="fas fa-check"></i> SLA 99.9%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-bar"></div>
+    <div class="logo-small"><div class="icon"><img src="hpass-icon.png" alt="hPass"></div> hPass</div>
+    <div class="slide-number">07 / 08</div>
+</div>
+
+<!-- ============ SLIDE 8: CTA ============ -->
+<div class="slide slide-cta">
+    <div class="cta-inner">
+        <div class="cta-logo">hP</div>
+        <h2 class="cta-title">Bắt đầu bảo vệ mật khẩu<br>doanh nghiệp ngay hôm nay</h2>
+        <p class="cta-desc">
+            Tải hPass ngay hoặc đăng ký hOne
+            để sử dụng đầy đủ tính năng đồng bộ và chia sẻ team.
+        </p>
+        <div class="cta-btns">
+            <a href="#" class="cta-btn white">
+                <i class="fas fa-download"></i>
+                Tải ứng dụng miễn phí
+            </a>
+            <a href="#" class="cta-btn ghost">
+                <i class="fas fa-globe"></i>
+                Dùng trên Web
+            </a>
+        </div>
+        <div class="cta-contact">
+            <span><i class="fas fa-globe"></i> haoquangviet.com/hPass</span>
+            <span><i class="fas fa-envelope"></i> hpass@haoquangviet.com</span>
+            <span><i class="fas fa-phone-alt"></i> +84-28-77796009</span>
+        </div>
+    </div>
+
+    <div class="brand-bar"></div>
+    <div class="slide-number" style="color:rgba(255,255,255,0.3)">08 / 08</div>
+</div>
+
+</body>
+</html>
