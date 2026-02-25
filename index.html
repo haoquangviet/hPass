@@ -103,15 +103,15 @@
         .logo-icon {
             width: 45px;
             height: 45px;
-            background: var(--gradient-brand);
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 18px;
+            overflow: hidden;
             box-shadow: 0 4px 15px rgba(255,121,29,0.3);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .logo-text {
@@ -2647,7 +2647,7 @@
         <div class="container">
             <nav>
                 <a href="#" class="logo">
-                    <div class="logo-icon">hP</div>
+                    <div class="logo-icon"><img src="hpass-icon.png" alt="hPass"></div>
                     <div class="logo-text">h<span>Pass</span></div>
                 </a>
 
@@ -3837,7 +3837,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="#" class="logo">
-                        <div class="logo-icon">hP</div>
+                        <div class="logo-icon"><img src="hpass-icon.png" alt="hPass"></div>
                         <div class="logo-text">h<span>Pass</span></div>
                     </a>
                     <p>
