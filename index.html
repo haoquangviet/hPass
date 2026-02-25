@@ -1843,6 +1843,168 @@
             background: rgba(255,255,255,0.1);
         }
 
+        /* ========== LEGAL MODAL ========== */
+        .legal-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .legal-modal-overlay.open {
+            display: flex;
+        }
+
+        .legal-modal {
+            background: #fff;
+            border-radius: 16px;
+            max-width: 720px;
+            width: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .legal-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+
+        .legal-modal-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .legal-modal-lang {
+            display: flex;
+            gap: 4px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 3px;
+        }
+
+        .legal-modal-lang button {
+            padding: 5px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+        }
+
+        .legal-modal-lang button.active {
+            background: #fff;
+            color: var(--text-dark);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .legal-modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f3f4f6;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 16px;
+            transition: all 0.2s ease;
+            margin-left: 12px;
+        }
+
+        .legal-modal-close:hover {
+            background: #e5e7eb;
+            color: var(--text-dark);
+        }
+
+        .legal-modal-body {
+            overflow-y: auto;
+            padding: 24px;
+            flex: 1;
+        }
+
+        .legal-modal-body h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 24px 0 8px;
+        }
+
+        .legal-modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .legal-modal-body p {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .legal-modal-body ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .legal-modal-body li {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .legal-modal-body .legal-update {
+            font-size: 12px;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .legal-content { display: none; }
+        .legal-content.active { display: block; }
+
+        @media (max-width: 768px) {
+            .legal-modal {
+                max-height: 90vh;
+                border-radius: 12px;
+            }
+            .legal-modal-header {
+                padding: 16px;
+            }
+            .legal-modal-header h2 {
+                font-size: 16px;
+            }
+            .legal-modal-body {
+                padding: 16px;
+            }
+        }
+
         /* ========== FOOTER ========== */
         footer {
             background: var(--security-dark);
@@ -3382,6 +3544,284 @@
         </div>
     </section>
 
+    <!-- Privacy Policy Modal -->
+    <div class="legal-modal-overlay" id="privacy-modal">
+        <div class="legal-modal">
+            <div class="legal-modal-header">
+                <h2 id="privacy-modal-title">Chính sách bảo mật</h2>
+                <div style="display:flex;align-items:center;">
+                    <div class="legal-modal-lang" data-modal="privacy">
+                        <button class="active" data-lang="vi">VI</button>
+                        <button data-lang="en">EN</button>
+                    </div>
+                    <button class="legal-modal-close" onclick="closeLegalModal('privacy-modal')">&times;</button>
+                </div>
+            </div>
+            <div class="legal-modal-body">
+                <!-- Vietnamese -->
+                <div class="legal-content active" id="privacy-vi">
+                    <p class="legal-update">Cập nhật lần cuối: 25/02/2026</p>
+
+                    <h3>1. Giới thiệu</h3>
+                    <p>Công ty TNHH Phần Mềm Hào Quang Việt ("chúng tôi") cam kết bảo vệ quyền riêng tư của bạn. Chính sách này mô tả cách hPass thu thập, sử dụng và bảo vệ thông tin của bạn.</p>
+
+                    <h3>2. Dữ liệu chúng tôi KHÔNG thu thập</h3>
+                    <p>hPass được thiết kế theo nguyên tắc <strong>Local-First</strong>. Chúng tôi <strong>không</strong> thu thập:</p>
+                    <ul>
+                        <li>Mật khẩu, khóa mã hóa hoặc dữ liệu vault của bạn</li>
+                        <li>Thông tin cá nhân, hành vi sử dụng hoặc dữ liệu phân tích</li>
+                        <li>Danh bạ, tin nhắn, ảnh hoặc bất kỳ dữ liệu thiết bị nào</li>
+                        <li>Vị trí, địa chỉ IP hoặc thông tin định danh thiết bị</li>
+                    </ul>
+
+                    <h3>3. Lưu trữ dữ liệu</h3>
+                    <p>Toàn bộ dữ liệu vault được mã hóa AES-256 và lưu trữ <strong>trực tiếp trên thiết bị</strong> của bạn. Khóa mã hóa chính (Master Key) được bảo vệ bởi Android Hardware Keystore (TEE/StrongBox).</p>
+
+                    <h3>4. Đồng bộ doanh nghiệp (tùy chọn)</h3>
+                    <p>Khi sử dụng tính năng đồng bộ với hOne:</p>
+                    <ul>
+                        <li>Dữ liệu chỉ được đồng bộ lên <strong>máy chủ hOne riêng</strong> của doanh nghiệp bạn</li>
+                        <li>Dữ liệu được mã hóa end-to-end trước khi truyền tải</li>
+                        <li>Chúng tôi không có quyền truy cập vào máy chủ hOne của bạn</li>
+                        <li>Bạn có toàn quyền kiểm soát và xóa dữ liệu bất cứ lúc nào</li>
+                    </ul>
+
+                    <h3>5. Mã hóa & bảo mật</h3>
+                    <ul>
+                        <li><strong>AES-256-CBC</strong> cho mã hóa vault items</li>
+                        <li><strong>AES-256-GCM</strong> cho Hardware Keystore operations</li>
+                        <li><strong>PBKDF2 với 100,000 iterations</strong> cho key derivation</li>
+                        <li>Random IV cho mỗi lần mã hóa</li>
+                        <li>Biometric/PIN xác thực tại Hardware Security Module</li>
+                    </ul>
+
+                    <h3>6. Quyền ứng dụng</h3>
+                    <p>hPass chỉ yêu cầu các quyền tối thiểu:</p>
+                    <ul>
+                        <li><strong>Internet</strong>: Chỉ khi bật đồng bộ hOne (tùy chọn)</li>
+                        <li><strong>Biometric</strong>: Xác thực vân tay/khuôn mặt</li>
+                        <li><strong>Autofill Service</strong>: Tự động điền mật khẩu (tùy chọn)</li>
+                    </ul>
+
+                    <h3>7. Quyền của bạn</h3>
+                    <p>Bạn có toàn quyền:</p>
+                    <ul>
+                        <li>Xuất (export) toàn bộ dữ liệu vault bất cứ lúc nào</li>
+                        <li>Xóa toàn bộ dữ liệu bằng cách gỡ ứng dụng</li>
+                        <li>Tắt đồng bộ và sử dụng hoàn toàn offline</li>
+                    </ul>
+
+                    <h3>8. Liên hệ</h3>
+                    <p>Nếu có câu hỏi về chính sách bảo mật, vui lòng liên hệ:<br>
+                    Email: <strong>privacy@haoquangviet.com</strong><br>
+                    Công ty TNHH Phần Mềm Hào Quang Việt</p>
+                </div>
+
+                <!-- English -->
+                <div class="legal-content" id="privacy-en">
+                    <p class="legal-update">Last updated: February 25, 2026</p>
+
+                    <h3>1. Introduction</h3>
+                    <p>Hao Quang Viet Software Company Limited ("we") is committed to protecting your privacy. This policy describes how hPass collects, uses, and protects your information.</p>
+
+                    <h3>2. Data We Do NOT Collect</h3>
+                    <p>hPass is designed with a <strong>Local-First</strong> principle. We do <strong>not</strong> collect:</p>
+                    <ul>
+                        <li>Your passwords, encryption keys, or vault data</li>
+                        <li>Personal information, usage behavior, or analytics data</li>
+                        <li>Contacts, messages, photos, or any device data</li>
+                        <li>Location, IP address, or device identifiers</li>
+                    </ul>
+
+                    <h3>3. Data Storage</h3>
+                    <p>All vault data is encrypted with AES-256 and stored <strong>directly on your device</strong>. The Master Key is protected by Android Hardware Keystore (TEE/StrongBox).</p>
+
+                    <h3>4. Enterprise Sync (Optional)</h3>
+                    <p>When using hOne sync feature:</p>
+                    <ul>
+                        <li>Data is only synced to <strong>your enterprise's own hOne server</strong></li>
+                        <li>Data is encrypted end-to-end before transmission</li>
+                        <li>We have no access to your hOne server</li>
+                        <li>You have full control to delete data at any time</li>
+                    </ul>
+
+                    <h3>5. Encryption & Security</h3>
+                    <ul>
+                        <li><strong>AES-256-CBC</strong> for vault item encryption</li>
+                        <li><strong>AES-256-GCM</strong> for Hardware Keystore operations</li>
+                        <li><strong>PBKDF2 with 100,000 iterations</strong> for key derivation</li>
+                        <li>Random IV for each encryption operation</li>
+                        <li>Biometric/PIN authentication at Hardware Security Module</li>
+                    </ul>
+
+                    <h3>6. App Permissions</h3>
+                    <p>hPass only requests minimal permissions:</p>
+                    <ul>
+                        <li><strong>Internet</strong>: Only when hOne sync is enabled (optional)</li>
+                        <li><strong>Biometric</strong>: Fingerprint/face authentication</li>
+                        <li><strong>Autofill Service</strong>: Auto-fill passwords (optional)</li>
+                    </ul>
+
+                    <h3>7. Your Rights</h3>
+                    <p>You have full rights to:</p>
+                    <ul>
+                        <li>Export all vault data at any time</li>
+                        <li>Delete all data by uninstalling the app</li>
+                        <li>Disable sync and use completely offline</li>
+                    </ul>
+
+                    <h3>8. Contact</h3>
+                    <p>For privacy policy questions, please contact:<br>
+                    Email: <strong>privacy@haoquangviet.com</strong><br>
+                    Hao Quang Viet Software Company Limited</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div class="legal-modal-overlay" id="terms-modal">
+        <div class="legal-modal">
+            <div class="legal-modal-header">
+                <h2 id="terms-modal-title">Điều khoản sử dụng</h2>
+                <div style="display:flex;align-items:center;">
+                    <div class="legal-modal-lang" data-modal="terms">
+                        <button class="active" data-lang="vi">VI</button>
+                        <button data-lang="en">EN</button>
+                    </div>
+                    <button class="legal-modal-close" onclick="closeLegalModal('terms-modal')">&times;</button>
+                </div>
+            </div>
+            <div class="legal-modal-body">
+                <!-- Vietnamese -->
+                <div class="legal-content active" id="terms-vi">
+                    <p class="legal-update">Cập nhật lần cuối: 25/02/2026</p>
+
+                    <h3>1. Chấp nhận điều khoản</h3>
+                    <p>Bằng việc tải xuống và sử dụng hPass, bạn đồng ý với các điều khoản sử dụng này. Nếu không đồng ý, vui lòng ngừng sử dụng ứng dụng.</p>
+
+                    <h3>2. Mô tả dịch vụ</h3>
+                    <p>hPass là ứng dụng quản lý mật khẩu cá nhân và doanh nghiệp, cung cấp:</p>
+                    <ul>
+                        <li>Lưu trữ mật khẩu mã hóa AES-256 trên thiết bị</li>
+                        <li>Tự động điền mật khẩu (Autofill)</li>
+                        <li>Tạo mật khẩu mạnh ngẫu nhiên</li>
+                        <li>Xác thực TOTP (2FA)</li>
+                        <li>Đồng bộ với hOne (tùy chọn, dành cho doanh nghiệp)</li>
+                    </ul>
+
+                    <h3>3. Tài khoản & bảo mật</h3>
+                    <ul>
+                        <li>Bạn chịu trách nhiệm bảo mật mã PIN và phương thức xác thực</li>
+                        <li>Nếu quên mã PIN và không có biometric, dữ liệu <strong>không thể khôi phục</strong></li>
+                        <li>Chúng tôi không lưu trữ và không có khả năng khôi phục mã PIN hay khóa mã hóa của bạn</li>
+                    </ul>
+
+                    <h3>4. Bản Personal (miễn phí)</h3>
+                    <ul>
+                        <li>Sử dụng miễn phí, không giới hạn số lượng mục</li>
+                        <li>Toàn bộ dữ liệu lưu trữ cục bộ trên thiết bị</li>
+                        <li>Không có quảng cáo, không thu thập dữ liệu</li>
+                        <li>Hỗ trợ qua cộng đồng</li>
+                    </ul>
+
+                    <h3>5. Bản Enterprise (qua hOne)</h3>
+                    <ul>
+                        <li>Yêu cầu giấy phép hOne hợp lệ</li>
+                        <li>Đồng bộ 2 chiều với máy chủ hOne của doanh nghiệp</li>
+                        <li>Chia sẻ mật khẩu an toàn trong team</li>
+                        <li>Quản lý tập trung bởi quản trị viên hOne</li>
+                        <li>Hỗ trợ kỹ thuật ưu tiên</li>
+                    </ul>
+
+                    <h3>6. Giới hạn trách nhiệm</h3>
+                    <p>hPass được cung cấp "nguyên trạng" (as-is). Chúng tôi không chịu trách nhiệm về:</p>
+                    <ul>
+                        <li>Mất dữ liệu do người dùng quên mã PIN hoặc gỡ ứng dụng</li>
+                        <li>Thiệt hại gián tiếp phát sinh từ việc sử dụng ứng dụng</li>
+                        <li>Gián đoạn dịch vụ do lỗi thiết bị hoặc hệ điều hành</li>
+                    </ul>
+
+                    <h3>7. Sở hữu trí tuệ</h3>
+                    <p>hPass, logo, giao diện và mã nguồn là tài sản của Công ty TNHH Phần Mềm Hào Quang Việt. Bạn không được sao chép, phân phối lại hoặc dịch ngược ứng dụng.</p>
+
+                    <h3>8. Thay đổi điều khoản</h3>
+                    <p>Chúng tôi có quyền cập nhật điều khoản này. Thay đổi quan trọng sẽ được thông báo qua ứng dụng hoặc trang web.</p>
+
+                    <h3>9. Luật áp dụng</h3>
+                    <p>Điều khoản này được điều chỉnh bởi pháp luật Việt Nam. Mọi tranh chấp sẽ được giải quyết tại tòa án có thẩm quyền tại TP. Hồ Chí Minh.</p>
+
+                    <h3>10. Liên hệ</h3>
+                    <p>Email: <strong>legal@haoquangviet.com</strong><br>
+                    Công ty TNHH Phần Mềm Hào Quang Việt</p>
+                </div>
+
+                <!-- English -->
+                <div class="legal-content" id="terms-en">
+                    <p class="legal-update">Last updated: February 25, 2026</p>
+
+                    <h3>1. Acceptance of Terms</h3>
+                    <p>By downloading and using hPass, you agree to these Terms of Service. If you do not agree, please discontinue use of the application.</p>
+
+                    <h3>2. Service Description</h3>
+                    <p>hPass is a personal and enterprise password manager that provides:</p>
+                    <ul>
+                        <li>AES-256 encrypted password storage on device</li>
+                        <li>Autofill passwords</li>
+                        <li>Strong random password generator</li>
+                        <li>TOTP authentication (2FA)</li>
+                        <li>hOne sync (optional, for enterprise)</li>
+                    </ul>
+
+                    <h3>3. Account & Security</h3>
+                    <ul>
+                        <li>You are responsible for keeping your PIN and authentication methods secure</li>
+                        <li>If you forget your PIN and have no biometric, data <strong>cannot be recovered</strong></li>
+                        <li>We do not store and cannot recover your PIN or encryption keys</li>
+                    </ul>
+
+                    <h3>4. Personal Edition (Free)</h3>
+                    <ul>
+                        <li>Free to use, unlimited items</li>
+                        <li>All data stored locally on your device</li>
+                        <li>No ads, no data collection</li>
+                        <li>Community support</li>
+                    </ul>
+
+                    <h3>5. Enterprise Edition (via hOne)</h3>
+                    <ul>
+                        <li>Requires a valid hOne license</li>
+                        <li>Two-way sync with your enterprise's hOne server</li>
+                        <li>Secure password sharing within teams</li>
+                        <li>Centralized management by hOne administrator</li>
+                        <li>Priority technical support</li>
+                    </ul>
+
+                    <h3>6. Limitation of Liability</h3>
+                    <p>hPass is provided "as-is". We are not liable for:</p>
+                    <ul>
+                        <li>Data loss due to user forgetting PIN or uninstalling the app</li>
+                        <li>Indirect damages arising from use of the application</li>
+                        <li>Service interruptions due to device or OS errors</li>
+                    </ul>
+
+                    <h3>7. Intellectual Property</h3>
+                    <p>hPass, its logo, interface, and source code are the property of Hao Quang Viet Software Company Limited. You may not copy, redistribute, or reverse-engineer the application.</p>
+
+                    <h3>8. Changes to Terms</h3>
+                    <p>We reserve the right to update these terms. Significant changes will be communicated via the app or website.</p>
+
+                    <h3>9. Governing Law</h3>
+                    <p>These terms are governed by the laws of Vietnam. Any disputes shall be resolved at the competent court in Ho Chi Minh City.</p>
+
+                    <h3>10. Contact</h3>
+                    <p>Email: <strong>legal@haoquangviet.com</strong><br>
+                    Hao Quang Viet Software Company Limited</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -3428,8 +3868,8 @@
                     <ul>
                         <li><a href="#">Về Hào Quang Việt</a></li>
                         <li><a href="#">Liên hệ</a></li>
-                        <li><a href="#">Chính sách bảo mật</a></li>
-                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#" onclick="openLegalModal('privacy-modal');return false;">Chính sách bảo mật</a></li>
+                        <li><a href="#" onclick="openLegalModal('terms-modal');return false;">Điều khoản sử dụng</a></li>
                     </ul>
                 </div>
             </div>
@@ -3777,6 +4217,60 @@
                 restartAutoPlayAfterInactivity();
             }, { capture: true });
         })();
+    </script>
+
+    <!-- Legal Modal Scripts -->
+    <script>
+        function openLegalModal(id) {
+            document.getElementById(id).classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLegalModal(id) {
+            document.getElementById(id).classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Close on overlay click
+        document.querySelectorAll('.legal-modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeLegalModal(overlay.id);
+                }
+            });
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.legal-modal-overlay.open').forEach(m => {
+                    closeLegalModal(m.id);
+                });
+            }
+        });
+
+        // Language switcher
+        document.querySelectorAll('.legal-modal-lang').forEach(langGroup => {
+            const modalType = langGroup.dataset.modal; // 'privacy' or 'terms'
+            langGroup.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    // Update active button
+                    langGroup.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    // Switch content
+                    document.getElementById(modalType + '-vi').classList.toggle('active', lang === 'vi');
+                    document.getElementById(modalType + '-en').classList.toggle('active', lang === 'en');
+                    // Update title
+                    const titleEl = document.getElementById(modalType + '-modal-title');
+                    if (modalType === 'privacy') {
+                        titleEl.textContent = lang === 'vi' ? 'Chính sách bảo mật' : 'Privacy Policy';
+                    } else {
+                        titleEl.textContent = lang === 'vi' ? 'Điều khoản sử dụng' : 'Terms of Service';
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
