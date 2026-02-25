@@ -1411,8 +1411,9 @@
             border-radius: 20px;
             padding: 25px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
         }
 
         .security-layer:nth-child(1) {
@@ -1424,14 +1425,22 @@
             top: 140px;
             z-index: 2;
             transform: translateX(-50%) scale(0.95);
-            opacity: 0.95;
+            opacity: 0.85;
         }
 
         .security-layer:nth-child(3) {
             top: 270px;
             z-index: 1;
             transform: translateX(-50%) scale(0.9);
-            opacity: 0.9;
+            opacity: 0.7;
+        }
+
+        .security-layer.active {
+            z-index: 10 !important;
+            transform: translateX(-50%) scale(1) !important;
+            opacity: 1 !important;
+            border-color: var(--primary-orange);
+            box-shadow: 0 15px 50px rgba(255,121,29,0.2);
         }
 
         .layer-header {
@@ -4247,6 +4256,15 @@
                     closeLegalModal(m.id);
                 });
             }
+        });
+
+        // Security layer click-to-activate
+        document.querySelectorAll('.security-layer').forEach(layer => {
+            layer.addEventListener('click', () => {
+                const wasActive = layer.classList.contains('active');
+                document.querySelectorAll('.security-layer').forEach(l => l.classList.remove('active'));
+                if (!wasActive) layer.classList.add('active');
+            });
         });
 
         // Language switcher
