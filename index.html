@@ -402,6 +402,18 @@
             line-height: 1.6;
         }
 
+        .swipe-hint {
+            display: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 900px) {
+            .swipe-hint { display: block; }
+        }
+
         /* Screenshots slider */
         .screenshots {
             padding: 6rem 2rem;
