@@ -1416,19 +1416,20 @@
             cursor: pointer;
         }
 
-        .security-layer:nth-child(1) {
+        /* Positions set by JS based on active state */
+        .security-layer.layer-pos-0 {
             top: 0;
             z-index: 3;
         }
 
-        .security-layer:nth-child(2) {
+        .security-layer.layer-pos-1 {
             top: 140px;
             z-index: 2;
             transform: translateX(-50%) scale(0.95);
             opacity: 0.85;
         }
 
-        .security-layer:nth-child(3) {
+        .security-layer.layer-pos-2 {
             top: 270px;
             z-index: 1;
             transform: translateX(-50%) scale(0.9);
@@ -2519,9 +2520,9 @@
                 border-radius: 14px;
                 max-width: 300px;
             }
-            .security-layer:nth-child(1) { top: 0; }
-            .security-layer:nth-child(2) { top: 95px; }
-            .security-layer:nth-child(3) { top: 185px; }
+            .security-layer.layer-pos-0 { top: 0; }
+            .security-layer.layer-pos-1 { top: 95px; }
+            .security-layer.layer-pos-2 { top: 185px; }
             .layer-header { margin-bottom: 8px; gap: 10px; }
             .layer-icon { width: 36px; height: 36px; font-size: 16px; border-radius: 10px; }
             .layer-title { font-size: 12.5px; }
@@ -4570,14 +4571,41 @@
             }
         });
 
-        // Security layer click-to-activate
-        document.querySelectorAll('.security-layer').forEach(layer => {
-            layer.addEventListener('click', () => {
-                const wasActive = layer.classList.contains('active');
-                document.querySelectorAll('.security-layer').forEach(l => l.classList.remove('active'));
-                if (!wasActive) layer.classList.add('active');
+        // Security layer click-to-activate with reordering
+        (function() {
+            const layers = Array.from(document.querySelectorAll('.security-layer'));
+            // Set initial positions: 0, 1, 2
+            layers.forEach((l, i) => l.classList.add('layer-pos-' + i));
+
+            function setPositions(activeIndex) {
+                // Remove all position and active classes
+                layers.forEach(l => {
+                    l.classList.remove('layer-pos-0', 'layer-pos-1', 'layer-pos-2', 'active');
+                });
+                if (activeIndex === -1) {
+                    // Default order
+                    layers.forEach((l, i) => l.classList.add('layer-pos-' + i));
+                    return;
+                }
+                // Active card gets pos-0 (top), others fill pos-1 and pos-2
+                let pos = 1;
+                layers.forEach((l, i) => {
+                    if (i === activeIndex) {
+                        l.classList.add('layer-pos-0', 'active');
+                    } else {
+                        l.classList.add('layer-pos-' + pos);
+                        pos++;
+                    }
+                });
+            }
+
+            layers.forEach((layer, idx) => {
+                layer.addEventListener('click', () => {
+                    const wasActive = layer.classList.contains('active');
+                    setPositions(wasActive ? -1 : idx);
+                });
             });
-        });
+        })();
 
         // Language switcher
         document.querySelectorAll('.legal-modal-lang').forEach(langGroup => {
