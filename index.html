@@ -1718,7 +1718,7 @@
         }
 
         .pricing-card.featured::before {
-            content: 'Phổ biến nhất';
+            content: var(--pricing-popular-label, 'Phổ biến nhất');
             position: absolute;
             top: -12px;
             left: 50%;
@@ -2263,6 +2263,32 @@
             }
         }
 
+        /* ========== LANGUAGE SWITCH ========== */
+        .lang-switch {
+            display: flex;
+            gap: 2px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            padding: 2px;
+            margin-left: 10px;
+        }
+        .lang-switch button {
+            padding: 4px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            background: transparent;
+            color: #6b7280;
+            transition: all 0.2s ease;
+        }
+        .lang-switch button.active {
+            background: #fff;
+            color: #1a1a2e;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
         /* ========== PRINT / PDF - A4 Landscape ========== */
         /* A4 ngang: 297mm x 210mm. Margin 12mm → vùng in: 273mm x 186mm ≈ 1032px x 703px @96dpi */
         @page {
@@ -2652,19 +2678,24 @@
                 </a>
 
                 <ul class="nav-links">
-                    <li><a href="#features">Tính năng</a></li>
-                    <li><a href="#security">Bảo mật</a></li>
-                    <li><a href="#sync">Đồng bộ</a></li>
-                    <li><a href="#comparison">So sánh</a></li>
-                    <li><a href="#pricing">Bảng giá</a></li>
+                    <li><a href="#features" data-i18n="nav.features">Tính năng</a></li>
+                    <li><a href="#security" data-i18n="nav.security">Bảo mật</a></li>
+                    <li><a href="#sync" data-i18n="nav.sync">Đồng bộ</a></li>
+                    <li><a href="#comparison" data-i18n="nav.comparison">So sánh</a></li>
+                    <li><a href="#pricing" data-i18n="nav.pricing">Bảng giá</a></li>
                 </ul>
 
                 <div class="nav-cta">
-                    <a href="#" class="btn btn-outline">Đăng nhập hOne</a>
+                    <a href="#" class="btn btn-outline" data-i18n="nav.login">Đăng nhập hOne</a>
                     <a href="#" class="btn btn-primary">
                         <i class="fas fa-download"></i>
-                        Tải ứng dụng
+                        <span data-i18n="nav.download">Tải ứng dụng</span>
                     </a>
+                </div>
+
+                <div class="lang-switch">
+                    <button class="active" data-lang="vi">VI</button>
+                    <button data-lang="en">EN</button>
                 </div>
 
                 <button class="mobile-menu-btn">
@@ -2681,14 +2712,14 @@
                 <div class="hero-text">
                     <div class="hero-badge">
                         <i class="fas fa-shield-alt"></i>
-                        Mã hóa AES-256 chuẩn ngân hàng
+                        <span data-i18n="hero.badge">Mã hóa AES-256 chuẩn ngân hàng</span>
                     </div>
 
-                    <h1>
+                    <h1 data-i18n-html="hero.title">
                         Quản lý mật khẩu <span class="highlight">an toàn</span> cho <span class="highlight-blue">doanh nghiệp</span>
                     </h1>
 
-                    <p class="hero-description">
+                    <p class="hero-description" data-i18n-html="hero.desc">
                         hPass là trình quản lý mật khẩu đa nền tảng, tích hợp đồng bộ 2 chiều với
                         <strong>hOne - Hệ thống vận hành doanh nghiệp</strong>. Chia sẻ mật khẩu an toàn
                         cho team, tự động điền mật khẩu mọi ứng dụng.
@@ -2697,7 +2728,7 @@
                     <div class="hero-stats">
                         <div class="stat-item">
                             <span class="stat-number">256</span>
-                            <span class="stat-label">bit mã hóa</span>
+                            <span class="stat-label" data-i18n="hero.stat1">bit mã hóa</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number">100K</span>
@@ -2705,18 +2736,18 @@
                         </div>
                         <div class="stat-item">
                             <span class="stat-number">2FA</span>
-                            <span class="stat-label">TOTP tích hợp</span>
+                            <span class="stat-label" data-i18n="hero.stat3">TOTP tích hợp</span>
                         </div>
                     </div>
 
                     <div class="hero-buttons">
                         <a href="#" class="btn btn-primary btn-lg">
                             <i class="fas fa-download"></i>
-                            Tải ứng dụng miễn phí
+                            <span data-i18n="hero.btn.download">Tải ứng dụng miễn phí</span>
                         </a>
                         <a href="#" class="btn btn-security btn-lg">
                             <i class="fas fa-play-circle"></i>
-                            Xem Demo
+                            <span data-i18n="hero.btn.demo">Xem Demo</span>
                         </a>
                     </div>
                 </div>
@@ -2734,7 +2765,7 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                         <div class="pin-title">hPass</div>
-                                        <div class="pin-subtitle">Nhập mã PIN để mở khóa</div>
+                                        <div class="pin-subtitle" data-i18n="phone.pin.subtitle">Nhập mã PIN để mở khóa</div>
                                         <div class="pin-dots" id="pin-dots">
                                             <div class="pin-dot"></div>
                                             <div class="pin-dot"></div>
@@ -2759,7 +2790,7 @@
                                         </div>
                                         <div class="pin-biometric-hint">
                                             <i class="fas fa-fingerprint"></i>
-                                            Mở bằng vân tay
+                                            <span data-i18n="phone.pin.bio">Mở bằng vân tay</span>
                                         </div>
                                     </div>
 
@@ -2775,14 +2806,14 @@
 
                                         <div class="app-search">
                                             <i class="fas fa-search"></i>
-                                            <span>Tìm kiếm mật khẩu...</span>
+                                            <span data-i18n="phone.search">Tìm kiếm mật khẩu...</span>
                                         </div>
 
                                         <div class="vault-category-chips">
-                                            <div class="vault-chip"><i class="fas fa-heart" style="font-size:9px;"></i> Yêu thích</div>
-                                            <div class="vault-chip active">Tất cả</div>
-                                            <div class="vault-chip"><i class="fas fa-user" style="font-size:9px;"></i> Đăng nhập</div>
-                                            <div class="vault-chip"><i class="fas fa-credit-card" style="font-size:9px;"></i> Thẻ</div>
+                                            <div class="vault-chip"><i class="fas fa-heart" style="font-size:9px;"></i> <span data-i18n="phone.chip.fav">Yêu thích</span></div>
+                                            <div class="vault-chip active" data-i18n="phone.chip.all">Tất cả</div>
+                                            <div class="vault-chip"><i class="fas fa-user" style="font-size:9px;"></i> <span data-i18n="phone.chip.login">Đăng nhập</span></div>
+                                            <div class="vault-chip"><i class="fas fa-credit-card" style="font-size:9px;"></i> <span data-i18n="phone.chip.card">Thẻ</span></div>
                                         </div>
 
                                         <div class="vault-item">
@@ -2835,7 +2866,7 @@
                                     <div class="app-screen" id="screen-settings">
                                         <div class="settings-header">
                                             <button class="settings-back" id="settings-back"><i class="fas fa-arrow-left"></i></button>
-                                            <span class="settings-title">Cài đặt</span>
+                                            <span class="settings-title" data-i18n="phone.settings.title">Cài đặt</span>
                                         </div>
 
                                         <div class="settings-user-card">
@@ -2847,64 +2878,64 @@
                                             <div class="settings-sync-badge">Synced</div>
                                         </div>
 
-                                        <div class="settings-section-label">Bảo mật</div>
+                                        <div class="settings-section-label" data-i18n="phone.settings.security">Bảo mật</div>
                                         <div class="settings-group">
                                             <div class="settings-row">
                                                 <div class="settings-row-left">
                                                     <div class="settings-row-icon orange"><i class="fas fa-fingerprint"></i></div>
-                                                    <span class="settings-row-label">Mở khóa vân tay</span>
+                                                    <span class="settings-row-label" data-i18n="phone.settings.biometric">Mở khóa vân tay</span>
                                                 </div>
                                                 <div class="settings-toggle on"></div>
                                             </div>
                                             <div class="settings-row">
                                                 <div class="settings-row-left">
                                                     <div class="settings-row-icon blue"><i class="fas fa-clock"></i></div>
-                                                    <span class="settings-row-label">Tự động khóa</span>
+                                                    <span class="settings-row-label" data-i18n="phone.settings.autolock">Tự động khóa</span>
                                                 </div>
-                                                <span class="settings-row-value">1 phút <i class="fas fa-chevron-right" style="font-size:10px;"></i></span>
+                                                <span class="settings-row-value"><span data-i18n="phone.settings.autolock.val">1 phút</span> <i class="fas fa-chevron-right" style="font-size:10px;"></i></span>
                                             </div>
                                             <div class="settings-row">
                                                 <div class="settings-row-left">
                                                     <div class="settings-row-icon purple"><i class="fas fa-key"></i></div>
-                                                    <span class="settings-row-label">Đổi mã PIN</span>
+                                                    <span class="settings-row-label" data-i18n="phone.settings.changepin">Đổi mã PIN</span>
                                                 </div>
                                                 <span class="settings-row-value"><i class="fas fa-chevron-right" style="font-size:10px;"></i></span>
                                             </div>
                                         </div>
 
-                                        <div class="settings-section-label">Đồng bộ</div>
+                                        <div class="settings-section-label" data-i18n="phone.settings.sync">Đồng bộ</div>
                                         <div class="settings-group">
                                             <div class="settings-row">
                                                 <div class="settings-row-left">
                                                     <div class="settings-row-icon green"><i class="fas fa-sync-alt"></i></div>
-                                                    <span class="settings-row-label">Đồng bộ ngay</span>
+                                                    <span class="settings-row-label" data-i18n="phone.settings.syncnow">Đồng bộ ngay</span>
                                                 </div>
-                                                <span class="settings-row-value">Vừa xong <i class="fas fa-check" style="color:#348D00;font-size:11px;"></i></span>
+                                                <span class="settings-row-value"><span data-i18n="phone.settings.syncnow.val">Vừa xong</span> <i class="fas fa-check" style="color:#348D00;font-size:11px;"></i></span>
                                             </div>
                                             <div class="settings-row">
                                                 <div class="settings-row-left">
                                                     <div class="settings-row-icon blue"><i class="fas fa-server"></i></div>
-                                                    <span class="settings-row-label">Máy chủ</span>
+                                                    <span class="settings-row-label" data-i18n="phone.settings.server">Máy chủ</span>
                                                 </div>
                                                 <span class="settings-row-value">hcrm.hqv.biz</span>
                                             </div>
                                         </div>
 
-                                        <div class="settings-section-label">Giao diện</div>
+                                        <div class="settings-section-label" data-i18n="phone.settings.appearance">Giao diện</div>
                                         <div class="settings-group">
                                             <div class="settings-row">
                                                 <div class="settings-row-left">
                                                     <div class="settings-row-icon purple"><i class="fas fa-moon"></i></div>
-                                                    <span class="settings-row-label">Chế độ tối</span>
+                                                    <span class="settings-row-label" data-i18n="phone.settings.darkmode">Chế độ tối</span>
                                                 </div>
                                                 <div class="settings-toggle on"></div>
                                             </div>
                                             <div class="settings-row">
                                                 <div class="settings-row-left">
                                                     <div class="settings-row-icon red"><i class="fas fa-globe"></i></div>
-                                                    <span class="settings-row-label">Ngôn ngữ</span>
+                                                    <span class="settings-row-label" data-i18n="phone.settings.language">Ngôn ngữ</span>
                                                 </div>
-                                                <span class="settings-row-value">Tiếng Việt <i class="fas fa-chevron-right" style="font-size:10px;"></i></span>
+                                                <span class="settings-row-value"><span data-i18n="phone.settings.language.val">Tiếng Việt</span> <i class="fas fa-chevron-right" style="font-size:10px;"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -2926,7 +2957,7 @@
                         </div>
                         <div class="floating-text">
                             <strong>AES-256 CBC</strong>
-                            <span>Mã hóa chuẩn quân sự</span>
+                            <span data-i18n="float.aes">Mã hóa chuẩn quân sự</span>
                         </div>
                     </div>
 
@@ -2935,8 +2966,8 @@
                             <i class="fas fa-sync-alt"></i>
                         </div>
                         <div class="floating-text">
-                            <strong>Đồng bộ hOne</strong>
-                            <span>Realtime 2 chiều</span>
+                            <strong data-i18n="float.sync">Đồng bộ hOne</strong>
+                            <span data-i18n="float.sync.desc">Realtime 2 chiều</span>
                         </div>
                     </div>
                 </div>
@@ -2955,7 +2986,7 @@
                                 <div class="problem-icon">
                                     <i class="fas fa-exclamation-triangle"></i>
                                 </div>
-                                <div class="problem-text">
+                                <div class="problem-text" data-i18n="story.problem1">
                                     Gửi mật khẩu qua Zalo, Telegram - không có lịch sử, không kiểm soát được ai đang có
                                 </div>
                             </div>
@@ -2963,7 +2994,7 @@
                                 <div class="problem-icon">
                                     <i class="fas fa-user-times"></i>
                                 </div>
-                                <div class="problem-text">
+                                <div class="problem-text" data-i18n="story.problem2">
                                     Nhân viên nghỉ việc - phải đổi hàng chục mật khẩu, dễ bỏ sót gây mất an toàn
                                 </div>
                             </div>
@@ -2971,7 +3002,7 @@
                                 <div class="problem-icon">
                                     <i class="fas fa-sticky-note"></i>
                                 </div>
-                                <div class="problem-text">
+                                <div class="problem-text" data-i18n="story.problem3">
                                     Dùng chung 1 mật khẩu cho nhiều dịch vụ, ghi vào giấy note dán trên màn hình
                                 </div>
                             </div>
@@ -2979,7 +3010,7 @@
                                 <div class="problem-icon">
                                     <i class="fas fa-dollar-sign"></i>
                                 </div>
-                                <div class="problem-text">
+                                <div class="problem-text" data-i18n="story.problem4">
                                     Phần mềm nước ngoài đắt đỏ $5-8/user/tháng, không hỗ trợ tiếng Việt
                                 </div>
                             </div>
@@ -2990,20 +3021,20 @@
                 <div class="story-content">
                     <span class="section-label">
                         <i class="fas fa-lightbulb"></i>
-                        Câu chuyện ra đời
+                        <span data-i18n="story.label">Câu chuyện ra đời</span>
                     </span>
 
-                    <h2 class="section-title">
+                    <h2 class="section-title" data-i18n="story.title">
                         Từ nỗi đau thực tế của người quản lý doanh nghiệp
                     </h2>
 
-                    <p class="story-text">
+                    <p class="story-text" data-i18n-html="story.text1">
                         Khi điều hành doanh nghiệp, tôi nhận ra vấn đề nghiêm trọng:
                         <strong>không có cách nào chia sẻ mật khẩu an toàn</strong> cho team.
                         Mật khẩu gửi tràn lan qua chat, ai đang giữ những mật khẩu nào - không ai biết.
                     </p>
 
-                    <p class="story-text">
+                    <p class="story-text" data-i18n-html="story.text2">
                         Tôi đã thử Bitwarden, 1Password, LastPass... nhưng tất cả đều có điểm chung:
                         <strong>đắt đỏ với doanh nghiệp Việt Nam</strong> ($5-8/user/tháng),
                         không tích hợp được vào quy trình làm việc hiện có,
@@ -3011,7 +3042,7 @@
                     </p>
 
                     <div class="story-quote">
-                        <p>
+                        <p data-i18n="story.quote">
                             "hPass ra đời không chỉ là một password manager, mà là giải pháp quản lý
                             mật khẩu doanh nghiệp TÍCH HỢP HOÀN TOÀN vào hOne - nơi team đã làm việc hàng ngày.
                             Không cần app riêng, không chi phí thêm, bảo mật tối đa."
@@ -3020,7 +3051,7 @@
                             <div class="author-avatar" style="width:45px;height:45px;background:var(--gradient-brand);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;">TVQ</div>
                             <div class="author-info">
                                 <strong>Trần Văn Quyết</strong>
-                                <span>CEO — Công ty TNHH Phần Mềm Hào Quang Việt</span>
+                                <span data-i18n="story.author.title">CEO — Công ty TNHH Phần Mềm Hào Quang Việt</span>
                             </div>
                         </cite>
                     </div>
@@ -3035,10 +3066,10 @@
             <div class="section-header">
                 <span class="section-label">
                     <i class="fas fa-star"></i>
-                    Tính năng nổi bật
+                    <span data-i18n="features.label">Tính năng nổi bật</span>
                 </span>
-                <h2 class="section-title">Mọi thứ bạn cần để quản lý mật khẩu</h2>
-                <p>Được thiết kế đặc biệt cho doanh nghiệp Việt Nam với đầy đủ tính năng chuyên nghiệp</p>
+                <h2 class="section-title" data-i18n="features.title">Mọi thứ bạn cần để quản lý mật khẩu</h2>
+                <p data-i18n="features.subtitle">Được thiết kế đặc biệt cho doanh nghiệp Việt Nam với đầy đủ tính năng chuyên nghiệp</p>
             </div>
 
             <div class="features-grid">
@@ -3046,8 +3077,8 @@
                     <div class="feature-icon orange">
                         <i class="fas fa-fingerprint"></i>
                     </div>
-                    <h3>Mở khóa sinh trắc học</h3>
-                    <p>
+                    <h3 data-i18n="feature1.title">Mở khóa sinh trắc học</h3>
+                    <p data-i18n="feature1.desc">
                         Đăng nhập nhanh bằng vân tay hoặc Face ID với chuẩn bảo mật cao nhất,
                         kết hợp mã PIN dự phòng.
                     </p>
@@ -3057,8 +3088,8 @@
                     <div class="feature-icon blue">
                         <i class="fas fa-magic"></i>
                     </div>
-                    <h3>Tự động điền thông minh</h3>
-                    <p>
+                    <h3 data-i18n="feature2.title">Tự động điền thông minh</h3>
+                    <p data-i18n="feature2.desc">
                         Autofill Service nhận diện 70+ pattern form đăng nhập.
                         Hỗ trợ đăng nhập nhiều bước, tự động điền mã OTP 6 số.
                     </p>
@@ -3068,8 +3099,8 @@
                     <div class="feature-icon green">
                         <i class="fas fa-clock"></i>
                     </div>
-                    <h3>TOTP 2FA tích hợp</h3>
-                    <p>
+                    <h3 data-i18n="feature3.title">TOTP 2FA tích hợp</h3>
+                    <p data-i18n="feature3.desc">
                         Tạo mã xác thực 2 yếu tố ngay trong app. Không cần Google Authenticator
                         riêng biệt, đồng bộ mã TOTP qua hOne.
                     </p>
@@ -3079,8 +3110,8 @@
                     <div class="feature-icon orange">
                         <i class="fas fa-folder-tree"></i>
                     </div>
-                    <h3>Tổ chức linh hoạt</h3>
-                    <p>
+                    <h3 data-i18n="feature4.title">Tổ chức linh hoạt</h3>
+                    <p data-i18n="feature4.desc">
                         Thư mục phân cấp cha-con, danh mục (Login, Thẻ, Email, Ghi chú),
                         nhãn màu tùy chỉnh. Tìm kiếm toàn văn cực nhanh.
                     </p>
@@ -3090,8 +3121,8 @@
                     <div class="feature-icon blue">
                         <i class="fas fa-random"></i>
                     </div>
-                    <h3>Tạo mật khẩu mạnh</h3>
-                    <p>
+                    <h3 data-i18n="feature5.title">Tạo mật khẩu mạnh</h3>
+                    <p data-i18n="feature5.desc">
                         Generator với độ dài 8-128 ký tự. Tùy chỉnh chữ hoa, chữ thường,
                         số, ký tự đặc biệt. Đánh giá độ mạnh 4 cấp độ.
                     </p>
@@ -3101,8 +3132,8 @@
                     <div class="feature-icon green">
                         <i class="fas fa-file-import"></i>
                     </div>
-                    <h3>Import/Export dễ dàng</h3>
-                    <p>
+                    <h3 data-i18n="feature6.title">Import/Export dễ dàng</h3>
+                    <p data-i18n="feature6.desc">
                         Nhập từ Bitwarden, Chrome, LastPass một click. Xuất định dạng JSON
                         tương thích, sao lưu mã hóa an toàn.
                     </p>
@@ -3118,10 +3149,10 @@
                 <div class="sync-header">
                     <span class="section-label">
                         <i class="fas fa-sync-alt"></i>
-                        Đồng bộ 2 chiều
+                        <span data-i18n="sync.label">Đồng bộ 2 chiều</span>
                     </span>
-                    <h2 class="section-title">Tích hợp hoàn hảo với hOne</h2>
-                    <p>
+                    <h2 class="section-title" data-i18n="sync.title">Tích hợp hoàn hảo với hOne</h2>
+                    <p data-i18n="sync.subtitle">
                         Mật khẩu tạo trên điện thoại tự động xuất hiện trên web hOne và ngược lại.
                         Chia sẻ cho team member chỉ trong vài giây.
                     </p>
@@ -3133,7 +3164,7 @@
                             <i class="fas fa-mobile-alt"></i>
                         </div>
                         <div class="device-name">hPass Mobile</div>
-                        <div class="device-desc">Ứng dụng di động</div>
+                        <div class="device-desc" data-i18n="sync.device.mobile">Ứng dụng di động</div>
                     </div>
 
                     <div class="sync-arrow">
@@ -3147,7 +3178,7 @@
                             <i class="fas fa-server"></i>
                         </div>
                         <div class="device-name">hOne Server</div>
-                        <div class="device-desc">hcrm.hqv.biz</div>
+                        <div class="device-desc" data-i18n="sync.device.server.desc">hcrm.hqv.biz</div>
                     </div>
 
                     <div class="sync-arrow">
@@ -3161,33 +3192,33 @@
                             <i class="fas fa-laptop"></i>
                         </div>
                         <div class="device-name">hOne Web</div>
-                        <div class="device-desc">Password Manager</div>
+                        <div class="device-desc" data-i18n="sync.device.web">Password Manager</div>
                     </div>
                 </div>
 
                 <div class="sync-features">
                     <div class="sync-feature">
                         <i class="fas fa-wifi"></i>
-                        <h4>Hoạt động Offline</h4>
-                        <p>Truy cập đầy đủ kho mật khẩu khi không có mạng, đồng bộ khi online</p>
+                        <h4 data-i18n="sync.feature1.title">Hoạt động Offline</h4>
+                        <p data-i18n="sync.feature1.desc">Truy cập đầy đủ kho mật khẩu khi không có mạng, đồng bộ khi online</p>
                     </div>
 
                     <div class="sync-feature">
                         <i class="fas fa-users"></i>
-                        <h4>Chia sẻ Team</h4>
-                        <p>Phân quyền mật khẩu theo team, biết ai đang có quyền truy cập</p>
+                        <h4 data-i18n="sync.feature2.title">Chia sẻ Team</h4>
+                        <p data-i18n="sync.feature2.desc">Phân quyền mật khẩu theo team, biết ai đang có quyền truy cập</p>
                     </div>
 
                     <div class="sync-feature">
                         <i class="fas fa-history"></i>
-                        <h4>Conflict Resolution</h4>
-                        <p>Tự động xử lý xung đột khi chỉnh sửa đồng thời, không mất dữ liệu</p>
+                        <h4 data-i18n="sync.feature3.title">Conflict Resolution</h4>
+                        <p data-i18n="sync.feature3.desc">Tự động xử lý xung đột khi chỉnh sửa đồng thời, không mất dữ liệu</p>
                     </div>
 
                     <div class="sync-feature">
                         <i class="fas fa-bolt"></i>
-                        <h4>Sync định kỳ</h4>
-                        <p>Background sync mỗi 15 phút với WorkManager, tiết kiệm pin</p>
+                        <h4 data-i18n="sync.feature4.title">Sync định kỳ</h4>
+                        <p data-i18n="sync.feature4.desc">Background sync mỗi 15 phút với WorkManager, tiết kiệm pin</p>
                     </div>
                 </div>
             </div>
@@ -3201,12 +3232,12 @@
                 <div class="security-content">
                     <span class="section-label">
                         <i class="fas fa-shield-alt"></i>
-                        Bảo mật đa lớp
+                        <span data-i18n="security.label">Bảo mật đa lớp</span>
                     </span>
 
-                    <h2 class="section-title">Kiến trúc bảo mật cấp doanh nghiệp</h2>
+                    <h2 class="section-title" data-i18n="security.title">Kiến trúc bảo mật cấp doanh nghiệp</h2>
 
-                    <p class="story-text">
+                    <p class="story-text" data-i18n="security.desc">
                         hPass áp dụng mô hình bảo mật "zero-knowledge" - ngay cả máy chủ hOne
                         cũng không thể đọc mật khẩu của bạn. Tất cả được mã hóa trước khi rời thiết bị.
                     </p>
@@ -3215,29 +3246,29 @@
                         <li>
                             <span class="check-icon"><i class="fas fa-check"></i></span>
                             <div>
-                                <strong>Mã hóa AES-256-CBC</strong>
-                                <span>Chuẩn mã hóa quân sự với IV ngẫu nhiên 16 byte cho mỗi item</span>
+                                <strong data-i18n="security.aes.title">Mã hóa AES-256-CBC</strong>
+                                <span data-i18n="security.aes.desc">Chuẩn mã hóa quân sự với IV ngẫu nhiên 16 byte cho mỗi item</span>
                             </div>
                         </li>
                         <li>
                             <span class="check-icon"><i class="fas fa-check"></i></span>
                             <div>
-                                <strong>PBKDF2 với 100,000 iterations</strong>
-                                <span>Dẫn xuất khóa từ PIN chống brute-force attack</span>
+                                <strong data-i18n="security.pbkdf2.title">PBKDF2 với 100,000 iterations</strong>
+                                <span data-i18n="security.pbkdf2.desc">Dẫn xuất khóa từ PIN chống brute-force attack</span>
                             </div>
                         </li>
                         <li>
                             <span class="check-icon"><i class="fas fa-check"></i></span>
                             <div>
-                                <strong>Hardware Keystore</strong>
-                                <span>Master key được bảo vệ bởi chip bảo mật phần cứng</span>
+                                <strong data-i18n="security.hw.title">Hardware Keystore</strong>
+                                <span data-i18n="security.hw.desc">Master key được bảo vệ bởi chip bảo mật phần cứng</span>
                             </div>
                         </li>
                         <li>
                             <span class="check-icon"><i class="fas fa-check"></i></span>
                             <div>
-                                <strong>Auto-lock & Clipboard Clear</strong>
-                                <span>Tự động khóa sau thời gian không sử dụng, xóa clipboard sau 30s</span>
+                                <strong data-i18n="security.auto.title">Auto-lock & Clipboard Clear</strong>
+                                <span data-i18n="security.auto.desc">Tự động khóa sau thời gian không sử dụng, xóa clipboard sau 30s</span>
                             </div>
                         </li>
                     </ul>
@@ -3269,13 +3300,13 @@
                                 </div>
                                 <div>
                                     <div class="layer-title">Biometric + PIN</div>
-                                    <div class="layer-subtitle">Xác thực người dùng</div>
+                                    <div class="layer-subtitle" data-i18n="security.layer.bio.sub">Xác thực người dùng</div>
                                 </div>
                             </div>
                             <div class="layer-details">
-                                <span class="layer-tag">Vân tay</span>
+                                <span class="layer-tag" data-i18n="security.layer.bio.tag1">Vân tay</span>
                                 <span class="layer-tag">Face ID</span>
-                                <span class="layer-tag">4-6 số PIN</span>
+                                <span class="layer-tag" data-i18n="security.layer.bio.tag3">4-6 số PIN</span>
                             </div>
                         </div>
 
@@ -3286,7 +3317,7 @@
                                 </div>
                                 <div>
                                     <div class="layer-title">Vault Encryption</div>
-                                    <div class="layer-subtitle">Mã hóa từng item</div>
+                                    <div class="layer-subtitle" data-i18n="security.layer.enc.sub">Mã hóa từng item</div>
                                 </div>
                             </div>
                             <div class="layer-details">
@@ -3307,17 +3338,17 @@
             <div class="section-header">
                 <span class="section-label">
                     <i class="fas fa-balance-scale"></i>
-                    So sánh
+                    <span data-i18n="comp.label">So sánh</span>
                 </span>
-                <h2 class="section-title">hPass vs Các giải pháp khác</h2>
-                <p>Xem tại sao hPass là lựa chọn tối ưu cho doanh nghiệp Việt Nam</p>
+                <h2 class="section-title" data-i18n="comp.title">hPass vs Các giải pháp khác</h2>
+                <p data-i18n="comp.subtitle">Xem tại sao hPass là lựa chọn tối ưu cho doanh nghiệp Việt Nam</p>
             </div>
 
             <div class="comparison-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Tính năng</th>
+                            <th data-i18n="comp.th.feature">Tính năng</th>
                             <th class="hpass-col">hPass + hOne</th>
                             <th>Bitwarden</th>
                             <th>1Password</th>
@@ -3326,42 +3357,42 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Tích hợp hệ thống vận hành DN</td>
+                            <td data-i18n="comp.row1">Tích hợp hệ thống vận hành DN</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                         </tr>
                         <tr>
-                            <td>Chi phí/user/tháng</td>
-                            <td class="hpass-col"><strong style="color:var(--success-green)">MIỄN PHÍ</strong></td>
+                            <td data-i18n="comp.row2">Chi phí/user/tháng</td>
+                            <td class="hpass-col"><strong style="color:var(--success-green)" data-i18n="comp.row2.hpass">MIỄN PHÍ</strong></td>
                             <td>$4</td>
                             <td>$7.99</td>
                             <td>$4</td>
                         </tr>
                         <tr>
-                            <td>Giao diện tiếng Việt</td>
+                            <td data-i18n="comp.row3">Giao diện tiếng Việt</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-minus-circle check-partial"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                         </tr>
                         <tr>
-                            <td>Server đặt tại Việt Nam</td>
+                            <td data-i18n="comp.row4">Server đặt tại Việt Nam</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                         </tr>
                         <tr>
-                            <td>Chia sẻ mật khẩu team</td>
+                            <td data-i18n="comp.row5">Chia sẻ mật khẩu team</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                         </tr>
                         <tr>
-                            <td>TOTP 2FA tích hợp</td>
+                            <td data-i18n="comp.row6">TOTP 2FA tích hợp</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
@@ -3375,21 +3406,21 @@
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                         </tr>
                         <tr>
-                            <td>Offline access đầy đủ</td>
+                            <td data-i18n="comp.row8">Offline access đầy đủ</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-minus-circle check-partial"></i></td>
                         </tr>
                         <tr>
-                            <td>Import từ Chrome/Bitwarden</td>
+                            <td data-i18n="comp.row9">Import từ Chrome/Bitwarden</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-check-circle check-yes"></i></td>
                         </tr>
                         <tr>
-                            <td>Hỗ trợ kỹ thuật tiếng Việt</td>
+                            <td data-i18n="comp.row10">Hỗ trợ kỹ thuật tiếng Việt</td>
                             <td class="hpass-col"><i class="fas fa-check-circle check-yes"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
                             <td><i class="fas fa-times-circle check-no"></i></td>
@@ -3399,7 +3430,7 @@
                 </table>
                 <p class="comparison-note">
                     <i class="fas fa-info-circle"></i>
-                    hPass miễn phí khi sử dụng hOne. Đăng ký hOne để sử dụng ngay.
+                    <span data-i18n="comp.note">hPass miễn phí khi sử dụng hOne. Đăng ký hOne để sử dụng ngay.</span>
                 </p>
             </div>
         </div>
@@ -3411,18 +3442,18 @@
             <div class="section-header">
                 <span class="section-label">
                     <i class="fas fa-chart-line"></i>
-                    Lợi ích
+                    <span data-i18n="benefits.label">Lợi ích</span>
                 </span>
-                <h2 class="section-title">Tối ưu hóa quản lý mật khẩu doanh nghiệp</h2>
-                <p>Giảm chi phí, tăng bảo mật, tiết kiệm thời gian mỗi ngày</p>
+                <h2 class="section-title" data-i18n="benefits.title">Tối ưu hóa quản lý mật khẩu doanh nghiệp</h2>
+                <p data-i18n="benefits.subtitle">Giảm chi phí, tăng bảo mật, tiết kiệm thời gian mỗi ngày</p>
             </div>
 
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-number">1</div>
                     <div class="benefit-content">
-                        <h3>Tiết kiệm $50-100/tháng</h3>
-                        <p>
+                        <h3 data-i18n="benefit1.title">Tiết kiệm $50-100/tháng</h3>
+                        <p data-i18n="benefit1.desc">
                             Team 10 người dùng Bitwarden tốn $40/tháng, 1Password tốn $80/tháng.
                             hPass MIỄN PHÍ khi dùng hOne - tiết kiệm ngay từ tháng đầu tiên.
                         </p>
@@ -3432,8 +3463,8 @@
                 <div class="benefit-card">
                     <div class="benefit-number">2</div>
                     <div class="benefit-content">
-                        <h3>Giảm 90% rủi ro bảo mật</h3>
-                        <p>
+                        <h3 data-i18n="benefit2.title">Giảm 90% rủi ro bảo mật</h3>
+                        <p data-i18n="benefit2.desc">
                             Không còn gửi mật khẩu qua chat. Mỗi nhân viên chỉ thấy mật khẩu được phân quyền.
                             Nhân viên nghỉ việc - thu hồi quyền ngay lập tức.
                         </p>
@@ -3443,8 +3474,8 @@
                 <div class="benefit-card">
                     <div class="benefit-number">3</div>
                     <div class="benefit-content">
-                        <h3>Tiết kiệm 5 phút/nhân viên/ngày</h3>
-                        <p>
+                        <h3 data-i18n="benefit3.title">Tiết kiệm 5 phút/nhân viên/ngày</h3>
+                        <p data-i18n="benefit3.desc">
                             Tự động điền mật khẩu thay vì gõ tay hoặc tìm trong note.
                             10 nhân viên x 5 phút x 22 ngày = 18 giờ làm việc/tháng.
                         </p>
@@ -3454,8 +3485,8 @@
                 <div class="benefit-card">
                     <div class="benefit-number">4</div>
                     <div class="benefit-content">
-                        <h3>Onboard nhân viên mới trong 5 phút</h3>
-                        <p>
+                        <h3 data-i18n="benefit4.title">Onboard nhân viên mới trong 5 phút</h3>
+                        <p data-i18n="benefit4.desc">
                             Phân quyền mật khẩu theo team. Nhân viên mới join team là có ngay
                             tất cả mật khẩu cần thiết, không cần ai gửi từng cái một.
                         </p>
@@ -3471,58 +3502,58 @@
             <div class="section-header">
                 <span class="section-label">
                     <i class="fas fa-tag"></i>
-                    Bảng giá
+                    <span data-i18n="pricing.label">Bảng giá</span>
                 </span>
-                <h2 class="section-title">Đơn giản, minh bạch</h2>
-                <p>hPass miễn phí khi sử dụng nền tảng hOne</p>
+                <h2 class="section-title" data-i18n="pricing.title">Đơn giản, minh bạch</h2>
+                <p data-i18n="pricing.subtitle">hPass miễn phí khi sử dụng nền tảng hOne</p>
             </div>
 
             <div class="pricing-cards">
                 <div class="pricing-card">
-                    <h3>Cá nhân</h3>
-                    <div class="price">0đ<span>/tháng</span></div>
-                    <p class="price-desc">Sử dụng riêng, không đồng bộ server</p>
+                    <h3 data-i18n="pricing.personal">Cá nhân</h3>
+                    <div class="price" data-i18n-html="pricing.personal.price">0đ<span>/tháng</span></div>
+                    <p class="price-desc" data-i18n="pricing.personal.desc">Sử dụng riêng, không đồng bộ server</p>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Lưu trữ không giới hạn</li>
-                        <li><i class="fas fa-check"></i> Autofill mọi ứng dụng</li>
-                        <li><i class="fas fa-check"></i> TOTP 2FA tích hợp</li>
-                        <li><i class="fas fa-check"></i> Mã hóa AES-256</li>
-                        <li><i class="fas fa-check"></i> Sinh trắc học</li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.personal.f1">Lưu trữ không giới hạn</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.personal.f2">Autofill mọi ứng dụng</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.personal.f3">TOTP 2FA tích hợp</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.personal.f4">Mã hóa AES-256</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.personal.f5">Sinh trắc học</span></li>
                     </ul>
-                    <a href="#" class="btn btn-outline" style="width:100%;justify-content:center;">
+                    <a href="#" class="btn btn-outline" style="width:100%;justify-content:center;" data-i18n="pricing.personal.btn">
                         Tải ngay
                     </a>
                 </div>
 
                 <div class="pricing-card featured">
-                    <h3>Doanh nghiệp</h3>
-                    <div class="price">0đ<span>/user/tháng</span></div>
-                    <p class="price-desc">Đã bao gồm trong gói hOne</p>
+                    <h3 data-i18n="pricing.business">Doanh nghiệp</h3>
+                    <div class="price" data-i18n-html="pricing.business.price">0đ<span>/user/tháng</span></div>
+                    <p class="price-desc" data-i18n="pricing.business.desc">Đã bao gồm trong gói hOne</p>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Mọi tính năng Cá nhân</li>
-                        <li><i class="fas fa-check"></i> Đồng bộ hOne 2 chiều</li>
-                        <li><i class="fas fa-check"></i> Chia sẻ mật khẩu team</li>
-                        <li><i class="fas fa-check"></i> Phân quyền theo nhóm</li>
-                        <li><i class="fas fa-check"></i> Admin quản lý tập trung</li>
-                        <li><i class="fas fa-check"></i> Hỗ trợ kỹ thuật 24/7</li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.business.f1">Mọi tính năng Cá nhân</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.business.f2">Đồng bộ hOne 2 chiều</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.business.f3">Chia sẻ mật khẩu team</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.business.f4">Phân quyền theo nhóm</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.business.f5">Admin quản lý tập trung</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.business.f6">Hỗ trợ kỹ thuật 24/7</span></li>
                     </ul>
-                    <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">
+                    <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;" data-i18n="pricing.business.btn">
                         Đăng ký hOne
                     </a>
                 </div>
 
                 <div class="pricing-card">
                     <h3>Enterprise</h3>
-                    <div class="price">Liên hệ</div>
-                    <p class="price-desc">Self-hosted, tùy chỉnh theo yêu cầu</p>
+                    <div class="price" data-i18n="pricing.enterprise.price">Liên hệ</div>
+                    <p class="price-desc" data-i18n="pricing.enterprise.desc">Self-hosted, tùy chỉnh theo yêu cầu</p>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Mọi tính năng DN</li>
-                        <li><i class="fas fa-check"></i> Deploy server riêng</li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.enterprise.f1">Mọi tính năng DN</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.enterprise.f2">Deploy server riêng</span></li>
                         <li><i class="fas fa-check"></i> SSO/LDAP integration</li>
-                        <li><i class="fas fa-check"></i> Audit log chi tiết</li>
-                        <li><i class="fas fa-check"></i> SLA 99.9%</li>
+                        <li><i class="fas fa-check"></i> Audit log</li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="pricing.enterprise.f5">SLA 99.9%</span></li>
                     </ul>
-                    <a href="#" class="btn btn-security" style="width:100%;justify-content:center;">
+                    <a href="#" class="btn btn-security" style="width:100%;justify-content:center;" data-i18n="pricing.enterprise.btn">
                         Liên hệ tư vấn
                     </a>
                 </div>
@@ -3534,19 +3565,19 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Bắt đầu bảo vệ mật khẩu doanh nghiệp ngay hôm nay</h2>
-                <p>
+                <h2 data-i18n="cta.title">Bắt đầu bảo vệ mật khẩu doanh nghiệp ngay hôm nay</h2>
+                <p data-i18n="cta.subtitle">
                     Tải hPass ngay hoặc đăng ký hOne để sử dụng đầy đủ tính năng
                     đồng bộ và chia sẻ team.
                 </p>
                 <div class="cta-buttons">
                     <a href="#" class="btn btn-white btn-lg">
                         <i class="fas fa-download"></i>
-                        Tải ứng dụng miễn phí
+                        <span data-i18n="cta.btn.download">Tải ứng dụng miễn phí</span>
                     </a>
                     <a href="#" class="btn btn-ghost btn-lg">
                         <i class="fas fa-globe"></i>
-                        Dùng trên Web
+                        <span data-i18n="cta.btn.web">Dùng trên Web</span>
                     </a>
                 </div>
             </div>
@@ -3840,7 +3871,7 @@
                         <div class="logo-icon"><img src="hpass-icon.png" alt="hPass"></div>
                         <div class="logo-text">h<span>Pass</span></div>
                     </a>
-                    <p>
+                    <p data-i18n="footer.desc">
                         Trình quản lý mật khẩu doanh nghiệp, tích hợp hoàn hảo với
                         hOne - Hệ thống vận hành doanh nghiệp toàn diện.
                     </p>
@@ -3853,7 +3884,7 @@
                 </div>
 
                 <div class="footer-column">
-                    <h4>Sản phẩm</h4>
+                    <h4 data-i18n="footer.col1.title">Sản phẩm</h4>
                     <ul>
                         <li><a href="#">hPass Mobile</a></li>
                         <li><a href="#">hPass Web</a></li>
@@ -3863,29 +3894,29 @@
                 </div>
 
                 <div class="footer-column">
-                    <h4>Tài nguyên</h4>
+                    <h4 data-i18n="footer.col2.title">Tài nguyên</h4>
                     <ul>
-                        <li><a href="#">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#" data-i18n="footer.col2.guide">Hướng dẫn sử dụng</a></li>
                         <li><a href="#">Video tutorial</a></li>
-                        <li><a href="#">Blog bảo mật</a></li>
+                        <li><a href="#" data-i18n="footer.col2.blog">Blog bảo mật</a></li>
                         <li><a href="#">FAQ</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
-                    <h4>Công ty</h4>
+                    <h4 data-i18n="footer.col3.title">Công ty</h4>
                     <ul>
-                        <li><a href="#">Về Hào Quang Việt</a></li>
-                        <li><a href="#">Liên hệ</a></li>
-                        <li><a href="#" onclick="openLegalModal('privacy-modal');return false;">Chính sách bảo mật</a></li>
-                        <li><a href="#" onclick="openLegalModal('terms-modal');return false;">Điều khoản sử dụng</a></li>
+                        <li><a href="#" data-i18n="footer.col3.about">Về Hào Quang Việt</a></li>
+                        <li><a href="#" data-i18n="footer.col3.contact">Liên hệ</a></li>
+                        <li><a href="#" onclick="openLegalModal('privacy-modal');return false;" data-i18n="footer.col3.privacy">Chính sách bảo mật</a></li>
+                        <li><a href="#" onclick="openLegalModal('terms-modal');return false;" data-i18n="footer.col3.terms">Điều khoản sử dụng</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>
-                    © 2026 Công ty TNHH Phần Mềm Hào Quang Việt. Một sản phẩm của
+                    <span data-i18n="footer.copyright">© 2026 Công ty TNHH Phần Mềm Hào Quang Việt. Một sản phẩm của</span>
                     <a href="https://haoquangviet.com/hPass">haoquangviet.com/hPass</a> | <a href="https://haoquangviet.com/hOne">hOne Platform</a>
                 </p>
                 <div class="footer-badges">
@@ -4226,6 +4257,287 @@
                 restartAutoPlayAfterInactivity();
             }, { capture: true });
         })();
+    </script>
+
+    <!-- i18n Language Switching -->
+    <script>
+    (function() {
+        const translations = {
+            en: {
+                // Nav
+                'nav.features': 'Features',
+                'nav.security': 'Security',
+                'nav.sync': 'Sync',
+                'nav.comparison': 'Compare',
+                'nav.pricing': 'Pricing',
+                'nav.login': 'Login to hOne',
+                'nav.download': 'Download',
+
+                // Hero
+                'hero.badge': 'Bank-grade AES-256 encryption',
+                'hero.title': '<span class="highlight">Secure</span> password management for <span class="highlight-blue">enterprise</span>',
+                'hero.desc': 'hPass is a cross-platform password manager with two-way sync to <strong>hOne - Enterprise Operations System</strong>. Securely share passwords with your team, auto-fill across all apps.',
+                'hero.stat1': 'bit encryption',
+                'hero.stat3': 'TOTP built-in',
+                'hero.btn.download': 'Download free',
+                'hero.btn.demo': 'Watch Demo',
+
+                // Phone mockup
+                'phone.pin.subtitle': 'Enter PIN to unlock',
+                'phone.pin.bio': 'Unlock with fingerprint',
+                'phone.search': 'Search passwords...',
+                'phone.chip.fav': 'Favorites',
+                'phone.chip.all': 'All',
+                'phone.chip.login': 'Logins',
+                'phone.chip.card': 'Cards',
+                'phone.settings.title': 'Settings',
+                'phone.settings.security': 'Security',
+                'phone.settings.biometric': 'Fingerprint unlock',
+                'phone.settings.autolock': 'Auto-lock',
+                'phone.settings.autolock.val': '1 minute',
+                'phone.settings.changepin': 'Change PIN',
+                'phone.settings.sync': 'Sync',
+                'phone.settings.syncnow': 'Sync now',
+                'phone.settings.syncnow.val': 'Just now',
+                'phone.settings.server': 'Server',
+                'phone.settings.appearance': 'Appearance',
+                'phone.settings.darkmode': 'Dark mode',
+                'phone.settings.language': 'Language',
+                'phone.settings.language.val': 'Vietnamese',
+
+                // Floating
+                'float.aes': 'Military-grade encryption',
+                'float.sync': 'hOne Sync',
+                'float.sync.desc': 'Realtime 2-way',
+
+                // Story
+                'story.label': 'Origin story',
+                'story.title': 'From the real challenges of enterprise managers',
+                'story.problem1': 'Sending passwords via Zalo, Telegram - no history, no control over who has them',
+                'story.problem2': 'Employee leaves - have to change dozens of passwords, easy to miss and cause security breach',
+                'story.problem3': 'Using one password for multiple services, writing on sticky notes on the monitor',
+                'story.problem4': 'Foreign software costs $5-8/user/month, no Vietnamese language support',
+                'story.text1': 'When running a business, I realized a serious problem: <strong>there was no way to securely share passwords</strong> with the team. Passwords were shared freely via chat, and nobody knew who had which passwords.',
+                'story.text2': 'I tried Bitwarden, 1Password, LastPass... but they all had one thing in common: <strong>expensive for Vietnamese businesses</strong> ($5-8/user/month), couldn\'t integrate into existing workflows, and staff resisted having to use yet another separate app.',
+                'story.quote': '"hPass was born not just as a password manager, but as an enterprise password management solution FULLY INTEGRATED into hOne - where the team already works daily. No separate app, no extra cost, maximum security."',
+                'story.author.title': 'CEO — Hao Quang Viet Software Company',
+
+                // Features
+                'features.label': 'Key features',
+                'features.title': 'Everything you need to manage passwords',
+                'features.subtitle': 'Specially designed for Vietnamese businesses with full professional features',
+                'feature1.title': 'Biometric unlock',
+                'feature1.desc': 'Quick login with fingerprint or Face ID with the highest security standards, combined with backup PIN.',
+                'feature2.title': 'Smart auto-fill',
+                'feature2.desc': 'Autofill Service recognizes 70+ login form patterns. Supports multi-step login, auto-fills 6-digit OTP codes.',
+                'feature3.title': 'Built-in TOTP 2FA',
+                'feature3.desc': 'Generate 2-factor authentication codes right in the app. No need for separate Google Authenticator, sync TOTP codes via hOne.',
+                'feature4.title': 'Flexible organization',
+                'feature4.desc': 'Parent-child folders, categories (Login, Card, Email, Note), custom color labels. Lightning-fast full-text search.',
+                'feature5.title': 'Strong password generator',
+                'feature5.desc': 'Generator with 8-128 character length. Customize uppercase, lowercase, numbers, special characters. 4-level strength rating.',
+                'feature6.title': 'Easy Import/Export',
+                'feature6.desc': 'Import from Bitwarden, Chrome, LastPass in one click. Export to compatible JSON format, encrypted secure backup.',
+
+                // Sync
+                'sync.label': 'Two-way sync',
+                'sync.title': 'Perfect integration with hOne',
+                'sync.subtitle': 'Passwords created on mobile automatically appear on hOne web and vice versa. Share with team members in seconds.',
+                'sync.device.mobile': 'Mobile app',
+                'sync.device.server.desc': 'hcrm.hqv.biz',
+                'sync.device.web': 'Password Manager',
+                'sync.feature1.title': 'Works Offline',
+                'sync.feature1.desc': 'Full access to password vault without internet, syncs when online',
+                'sync.feature2.title': 'Team Sharing',
+                'sync.feature2.desc': 'Permission-based passwords by team, know who has access',
+                'sync.feature3.title': 'Conflict Resolution',
+                'sync.feature3.desc': 'Auto-resolves conflicts from simultaneous edits, no data loss',
+                'sync.feature4.title': 'Periodic Sync',
+                'sync.feature4.desc': 'Background sync every 15 minutes with WorkManager, battery-efficient',
+
+                // Security
+                'security.label': 'Multi-layer security',
+                'security.title': 'Enterprise-grade security architecture',
+                'security.desc': 'hPass uses a "zero-knowledge" security model - even the hOne server cannot read your passwords. Everything is encrypted before leaving the device.',
+                'security.aes.title': 'AES-256-CBC Encryption',
+                'security.aes.desc': 'Military-grade encryption with random 16-byte IV per item',
+                'security.pbkdf2.title': 'PBKDF2 with 100,000 iterations',
+                'security.pbkdf2.desc': 'Key derivation from PIN to resist brute-force attacks',
+                'security.hw.title': 'Hardware Keystore',
+                'security.hw.desc': 'Master key protected by hardware security chip',
+                'security.auto.title': 'Auto-lock & Clipboard Clear',
+                'security.auto.desc': 'Auto-locks after inactivity, clears clipboard after 30s',
+                'security.layer.bio.sub': 'User authentication',
+                'security.layer.enc.sub': 'Per-item encryption',
+                'security.layer.bio.tag1': 'Fingerprint',
+                'security.layer.bio.tag3': '4-6 digit PIN',
+
+                // Comparison
+                'comp.label': 'Compare',
+                'comp.title': 'hPass vs Other solutions',
+                'comp.subtitle': 'See why hPass is the optimal choice for Vietnamese businesses',
+                'comp.th.feature': 'Feature',
+                'comp.row1': 'Enterprise system integration',
+                'comp.row2': 'Cost/user/month',
+                'comp.row2.hpass': 'FREE',
+                'comp.row3': 'Vietnamese interface',
+                'comp.row4': 'Server in Vietnam',
+                'comp.row5': 'Team password sharing',
+                'comp.row6': 'Built-in TOTP 2FA',
+                'comp.row8': 'Full offline access',
+                'comp.row9': 'Import from Chrome/Bitwarden',
+                'comp.row10': 'Vietnamese tech support',
+                'comp.note': 'hPass is free when using hOne. Sign up for hOne to start now.',
+
+                // Benefits
+                'benefits.label': 'Benefits',
+                'benefits.title': 'Optimize enterprise password management',
+                'benefits.subtitle': 'Reduce costs, increase security, save time every day',
+                'benefit1.title': 'Save $50-100/month',
+                'benefit1.desc': 'A team of 10 using Bitwarden costs $40/month, 1Password costs $80/month. hPass is FREE with hOne - savings from day one.',
+                'benefit2.title': 'Reduce 90% security risk',
+                'benefit2.desc': 'No more passwords sent via chat. Each employee only sees authorized passwords. Employee leaves - revoke access immediately.',
+                'benefit3.title': 'Save 5 min/employee/day',
+                'benefit3.desc': 'Auto-fill instead of typing or searching notes. 10 employees x 5 min x 22 days = 18 work hours/month saved.',
+                'benefit4.title': 'Onboard new employees in 5 min',
+                'benefit4.desc': 'Permission-based passwords by team. New employee joins the team and instantly has all necessary passwords.',
+
+                // Pricing
+                'pricing.label': 'Pricing',
+                'pricing.title': 'Simple, transparent',
+                'pricing.subtitle': 'hPass is free when using the hOne platform',
+                'pricing.personal': 'Personal',
+                'pricing.personal.price': '0₫<span>/month</span>',
+                'pricing.personal.desc': 'Personal use, no server sync',
+                'pricing.personal.f1': 'Unlimited storage',
+                'pricing.personal.f2': 'Autofill all apps',
+                'pricing.personal.f3': 'Built-in TOTP 2FA',
+                'pricing.personal.f4': 'AES-256 encryption',
+                'pricing.personal.f5': 'Biometric auth',
+                'pricing.personal.btn': 'Download now',
+                'pricing.business': 'Business',
+                'pricing.business.price': '0₫<span>/user/month</span>',
+                'pricing.business.desc': 'Included in hOne package',
+                'pricing.business.f1': 'All Personal features',
+                'pricing.business.f2': 'hOne 2-way sync',
+                'pricing.business.f3': 'Team password sharing',
+                'pricing.business.f4': 'Group permissions',
+                'pricing.business.f5': 'Centralized admin',
+                'pricing.business.f6': '24/7 tech support',
+                'pricing.business.btn': 'Sign up for hOne',
+                'pricing.enterprise.price': 'Contact us',
+                'pricing.enterprise.desc': 'Self-hosted, customized',
+                'pricing.enterprise.f1': 'All Business features',
+                'pricing.enterprise.f2': 'Private server deploy',
+                'pricing.enterprise.f5': 'SLA 99.9%',
+                'pricing.enterprise.btn': 'Contact sales',
+
+                // CTA
+                'cta.title': 'Start protecting your enterprise passwords today',
+                'cta.subtitle': 'Download hPass now or sign up for hOne for full sync and team sharing features.',
+                'cta.btn.download': 'Download free',
+                'cta.btn.web': 'Use on Web',
+
+                // Footer
+                'footer.desc': 'Enterprise password manager, perfectly integrated with hOne - Comprehensive enterprise operations system.',
+                'footer.col1.title': 'Product',
+                'footer.col2.title': 'Resources',
+                'footer.col2.guide': 'User guide',
+                'footer.col2.blog': 'Security blog',
+                'footer.col3.title': 'Company',
+                'footer.col3.about': 'About Hao Quang Viet',
+                'footer.col3.contact': 'Contact',
+                'footer.col3.privacy': 'Privacy policy',
+                'footer.col3.terms': 'Terms of service',
+                'footer.copyright': '© 2026 Hao Quang Viet Software Company Limited. A product of',
+            }
+        };
+
+        let currentLang = localStorage.getItem('hpass-lang') || 'vi';
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('hpass-lang', lang);
+
+            // Update all lang-switch buttons on the page
+            document.querySelectorAll('.lang-switch button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+
+            if (lang === 'vi') {
+                // Restore original Vietnamese text
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    if (el.dataset.i18nOriginal !== undefined) {
+                        el.textContent = el.dataset.i18nOriginal;
+                    }
+                });
+                document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                    if (el.dataset.i18nHtmlOriginal !== undefined) {
+                        el.innerHTML = el.dataset.i18nHtmlOriginal;
+                    }
+                });
+                // Restore CSS label
+                document.documentElement.style.removeProperty('--pricing-popular-label');
+                return;
+            }
+
+            // Apply English translations
+            // CSS pseudo-element label
+            document.documentElement.style.setProperty('--pricing-popular-label', "'Most popular'");
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                // Save original Vietnamese text on first switch
+                if (el.dataset.i18nOriginal === undefined) {
+                    el.dataset.i18nOriginal = el.textContent;
+                }
+                if (translations.en[key] !== undefined) {
+                    el.textContent = translations.en[key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.dataset.i18nHtml;
+                if (el.dataset.i18nHtmlOriginal === undefined) {
+                    el.dataset.i18nHtmlOriginal = el.innerHTML;
+                }
+                if (translations.en[key] !== undefined) {
+                    el.innerHTML = translations.en[key];
+                }
+            });
+        }
+
+        // Save originals on DOMContentLoaded (before any switch)
+        function saveOriginals() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                el.dataset.i18nOriginal = el.textContent;
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                el.dataset.i18nHtmlOriginal = el.innerHTML;
+            });
+        }
+
+        // Bind lang-switch clicks
+        function bindLangSwitch() {
+            document.querySelectorAll('.lang-switch button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    applyLanguage(btn.dataset.lang);
+                });
+            });
+        }
+
+        // Init
+        saveOriginals();
+        bindLangSwitch();
+
+        // Apply saved language on load
+        if (currentLang !== 'vi') {
+            applyLanguage(currentLang);
+        }
+    })();
     </script>
 
     <!-- Legal Modal Scripts -->
